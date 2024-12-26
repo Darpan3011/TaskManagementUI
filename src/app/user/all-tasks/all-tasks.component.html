@@ -1,0 +1,25 @@
+<div class="container">
+
+    <input type="text" [(ngModel)]="searchtext" placeholder="Search tasks..." class="search-input" />
+    @if(filteredTasks){
+    <ul class="task-list">
+
+        @for(task of filteredTasks; track task.description){
+        <li class="task-item">
+            <div class="task-header">
+                <span class="task-title">{{task.title}}</span>
+                <div class="task-buttons">
+                    <a class="edit-button">Edit</a>
+                </div>
+            </div>
+            <span [ngClass]="{
+                                              'task-status-done': task.status == 0,
+                                              'task-status-inProgress': task.status == 1,
+                                              'task-status-pending': task.status == 2
+                                            }">Status: {{task.status}}</span>
+            <p class="task-description">{{task.description}}</p>
+        </li>
+        }
+    </ul>
+    }
+</div>

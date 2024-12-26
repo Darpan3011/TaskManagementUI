@@ -1,0 +1,20 @@
+<form (ngSubmit)="onSubmit()">
+    <label for="task-title">Task title</label>
+    <input class="task-title" name="task-title" [(ngModel)]="task!.title" />
+
+    <label for="task-status">Task Status</label>
+    <input name="task-status" type="number" [(ngModel)]="task!.status" />
+
+    <label for="task-description">Task Description</label>
+    <input class="task-description" id="task-description" name="taskDescription" [(ngModel)]="task!.description" />
+
+    <label for="task-user-id">Assigned to</label>
+    <select [(ngModel)]="task!.userId" name="task-user-id">
+        <option *ngFor="let user of users" [value]="user!.userId">{{user!.userName}}</option>
+    </select>
+
+    <label for="task-date">Due Date</label>
+    <input class="task-date" name="task-date" type="date" [(ngModel)]="task!.dueDate" />
+
+    <button type="submit">Submit</button>
+</form>

@@ -1,0 +1,87 @@
+form {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+    color: #333;
+}
+
+
+input[readonly] {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    color: #666;
+    font-size: 1rem;
+    padding: 10px;
+    margin-top: 5px;
+    width: 100%;
+    cursor: not-allowed;
+
+    box-sizing: border-box;
+}
+
+
+input.task-description {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #333;
+    font-size: 1rem;
+    padding: 10px;
+    margin-top: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+button {
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+
+input.task-title,
+input.task-user-id {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    color: #666;
+    font-size: 1rem;
+    padding: 10px;
+    margin-top: 5px;
+    width: 100%;
+    cursor: not-allowed;
+
+    box-sizing: border-box;
+}
+
+
+input.task-description {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    color: #333;
+    font-size: 1rem;
+    padding: 10px;
+    margin-top: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}

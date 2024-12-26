@@ -1,0 +1,54 @@
+/* Header container */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #007bff;
+    /* Primary color */
+    color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Username styling */
+header h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Logout button styling */
+header button {
+    padding: 8px 15px;
+    background-color: #ffffff;
+    color: #007bff;
+    border: 1px solid #ffffff;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover effect for the button */
+header button:hover {
+    background-color: #0056b3;
+    color: #ffffff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    header h4 {
+        margin-bottom: 10px;
+    }
+
+    header button {
+        width: 100%;
+    }
+}
