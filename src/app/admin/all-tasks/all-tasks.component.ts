@@ -34,7 +34,6 @@ export class FilterTaskComponent implements OnInit {
     const s2 = this.taskService.getAllUsers().subscribe({
       next: (data: any) => {
         this.users = data;
-        console.log('Users loaded:', this.users);
         this.mapTasksWithUserNames();
       },
       error: (err) => console.error('Error loading tasks:', err)
