@@ -4,7 +4,7 @@
     @if(filteredTasks && filteredTasks.length > 0) {
     <ul class="task-list">
         @for(task of filteredTasks; track task.title) {
-        <li class="task-item">  
+        <li class="task-item">
             <div class="task-header">
                 <span class="task-title">{{task.title}}</span>
                 <div class="task-buttons">
@@ -20,7 +20,7 @@
                             }">Status: {{task.status}}</span>
             <p class="task-description">{{task.description}}</p>
             <span class="task-user-id">
-                Assigned to: {{ task.userId }}
+                Assigned to: {{ task.userName }}
             </span>
         </li>
         }
