@@ -15,7 +15,7 @@ export class TaskServiceService {
             Authorization: `Bearer ${token}`
         });
 
-        return this.httpClient.get('https://localhost:7125/api/Admin/GetAllTasks', {
+        return this.httpClient.get('https://localhost:7125/api/Admin/tasks', {
             headers
         });
     }

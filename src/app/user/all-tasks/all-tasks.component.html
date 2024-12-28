@@ -13,13 +13,15 @@
                 </div>
             </div>
             <span [ngClass]="{
-                                              'task-status-done': task.status == 0,
-                                              'task-status-inProgress': task.status == 1,
-                                              'task-status-pending': task.status == 2
-                                            }">Status: {{task.status}}</span>
+                                'task-status-done': task.status == 0,
+                                'task-status-inProgress': task.status == 1,
+                                'task-status-pending': task.status == 2
+                                }">Status: {{task.status}}</span>
             <p class="task-description">{{task.description}}</p>
         </li>
         }
     </ul>
+    } @else {
+        <p>No Tasks found.</p>
     }
 </div>
