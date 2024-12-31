@@ -17,4 +17,11 @@
     <input class="task-date" name="task-date" type="date" [(ngModel)]="task!.dueDate" />
 
     <button type="submit">Submit</button>
+
+    <div *ngIf="errorMessageForTask" class="error-message">
+        {{ errorMessageForTask }}
+    </div>
+    <div *ngIf="successfullMessageForTask" class="success-message">
+        {{ successfullMessageForTask }}
+    </div>
 </form>

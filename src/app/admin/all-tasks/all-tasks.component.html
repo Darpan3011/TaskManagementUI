@@ -1,27 +1,29 @@
 <div class="container">
     <input type="text" [(ngModel)]="searchtext" placeholder="Search tasks..." class="search-input" />
 
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
     @if(filteredTasks && filteredTasks.length > 0) {
     <ul class="task-list">
         @for(task of filteredTasks; track task.title) {
         <li class="task-item">
             <div class="task-header">
-                <span class="task-title">{{task.title}}</span>
+                <span class="task-title">{{ task.title }}</span>
                 <div class="task-buttons">
-                    <a class="edit-button" [routerLink]="['..','update-task', task.title]"
+                    <a class="edit-button" [routerLink]="['..', 'update-task', task.title]"
                         routerLinkActive="router-link-active">Edit</a>
-                    <button class="delete-button" (click)="deleteTask(task.title)">Delete</button>
+                    <button class="delete-button" (click)="deleteTask(task.title)">
+                        Delete
+                    </button>
                 </div>
             </div>
             <span [ngClass]="{
-                              'task-status-done': task.status == 0,
-                              'task-status-inProgress': task.status == 1,
-                              'task-status-pending': task.status == 2
-                            }">Status: {{task.status}}</span>
-            <p class="task-description">{{task.description}}</p>
-            <span class="task-user-id">
-                Assigned to: {{ task.userName }}
-            </span>
+          'task-status-done': task.status == 0,
+          'task-status-inProgress': task.status == 1,
+          'task-status-pending': task.status == 2
+        }">Status: {{ task.status }}</span>
+            <p class="task-description">{{ task.description }}</p>
+            <span class="task-user-id">Assigned to: {{ task.userName }}</span>
         </li>
         }
     </ul>

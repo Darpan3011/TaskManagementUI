@@ -64,7 +64,7 @@ export class TaskServiceService {
         });
     }
 
-    getAllTasksByDueDate(date: Date) {
+    getAllTasksByDueDate(date: string) {
         const token = localStorage.getItem('Token');
         const headers = new HttpHeaders({
             Authorization: `Bearer ${token}`
@@ -95,18 +95,6 @@ export class TaskServiceService {
         });
     }
 
-    /// For Users
-    // getAllTasksForUser() {
-    //     const token = localStorage.getItem('Token');
-    //     const headers = new HttpHeaders({
-    //         Authorization: `Bearer ${token}`
-    //     });
-
-    //     return this.httpClient.get('https://localhost:7125/api/User/tasks', {
-    //         headers
-    //     });
-    // }
-
     getTasksByStatusForUser(taskTitle: string, status: number) {
         const token = localStorage.getItem('Token');
         const headers = new HttpHeaders({
@@ -116,4 +104,5 @@ export class TaskServiceService {
             headers
         });
     }
+
 }

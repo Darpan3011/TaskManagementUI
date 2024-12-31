@@ -1,23 +1,27 @@
-import { Component, DestroyRef, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { TaskServiceService } from '../../../services/task-service.service';
 import { FormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { Task, TaskWithUserName, User } from '../../types';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-all-tasks',
-  imports: [FormsModule, NgClass, RouterLink, RouterOutlet],
+  imports: [FormsModule, NgClass, RouterLink, RouterOutlet, NgIf],
   templateUrl: './all-tasks.component.html',
   styleUrls: ['./all-tasks.component.css'],
 })
 export class FilterTaskComponent implements OnInit {
+
   private taskService = inject(TaskServiceService);
+  private destroy = inject(DestroyRef);
 
   searchtext = '';
-  tasks$ = this.taskService.getAllTasks();
+  errorMessage: string | null = null;
+  users: User[] | null = null;
   alltasks: Task[] | null = null;
   tasksWithUserName: TaskWithUserName[] = [];
+  tasks$ = this.taskService.getAllTasks();
 
 
   get filteredTasks() {
@@ -26,9 +30,6 @@ export class FilterTaskComponent implements OnInit {
     );
   }
 
-  users: User[] | null = null;
-  private destroy = inject(DestroyRef);
-
   ngOnInit() {
 
     const s2 = this.taskService.getAllUsers().subscribe({
@@ -36,7 +37,7 @@ export class FilterTaskComponent implements OnInit {
         this.users = data;
         this.mapTasksWithUserNames();
       },
-      error: (err) => console.error('Error loading tasks:', err)
+      error: (err) => this.errorMessage = 'Failed to load users. Please try again.'
     });
 
 
@@ -45,7 +46,7 @@ export class FilterTaskComponent implements OnInit {
         this.alltasks = data;
         this.mapTasksWithUserNames();
       },
-      error: (err) => console.error('Error loading tasks:', err)
+      error: (err) => this.errorMessage = 'Failed to load users. Please try again.'
     });
 
     this.destroy.onDestroy(() => {
@@ -55,7 +56,12 @@ export class FilterTaskComponent implements OnInit {
   }
 
   deleteTask(title: string) {
-    this.taskService.deleteTheTask(title).subscribe();
+    this.taskService.deleteTheTask(title).subscribe({
+      error: (err) => {
+        console.error('Error deleting task:', err);
+        this.errorMessage = `Failed to delete the task "${title}". Please try again.`;
+      },
+    });
   }
 
   private mapTasksWithUserNames() {
