@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { TaskServiceService } from '../../../services/task-service.service';
 import { Task, User } from '../../types';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ import { NgFor } from '@angular/common';
   selector: 'app-add-task',
   imports: [FormsModule, NgFor],
   templateUrl: './add-task.component.html',
-  styleUrl: './add-task.component.css'
+  styleUrl: './add-task.component.css',
 })
 export class AddTaskComponent implements OnInit {
 

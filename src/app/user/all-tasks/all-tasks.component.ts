@@ -23,7 +23,7 @@ export class AllTasksComponent {
 
   alltasks: Task[] | null = null;
 
-  tasks$ = this.taskService.getAllTasksForUser();
+  tasks$ = this.taskService.getAllTasks();
 
   ngOnInit() {
     this.tasks$.subscribe({

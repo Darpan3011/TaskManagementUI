@@ -1,7 +1,7 @@
 import { Component, DestroyRef, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { TaskServiceService } from '../../../services/task-service.service';
 import { FormsModule } from '@angular/forms';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Task, TaskWithUserName, User } from '../../types';
 import { RouterLink, RouterOutlet } from '@angular/router';
 

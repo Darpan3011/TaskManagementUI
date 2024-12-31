@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Input, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { Task, User } from '../../types';
 import { FormsModule } from '@angular/forms';
 import { TaskServiceService } from '../../../services/task-service.service';

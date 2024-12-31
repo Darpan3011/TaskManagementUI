@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { AuthServiceService } from '../../services/auth-service.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
