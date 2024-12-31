@@ -18,6 +18,7 @@ export const routes: Routes = [
         path: 'admin',
         component: AdminComponent,
         children: [
+            { path: '', redirectTo: 'all-task', pathMatch: 'full' },
             { path: 'new-task', component: AddTaskComponent },
             { path: 'all-task', component: FilterTaskComponent },
             { path: 'update-task/:title', component: UpdateTheTaskComponent }

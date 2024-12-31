@@ -14,4 +14,11 @@
     </select>
 
     <button type="submit">Submit</button>
+
+    <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+    </div>
 </form>

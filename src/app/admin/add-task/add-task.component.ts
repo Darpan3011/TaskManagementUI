@@ -2,15 +2,21 @@ import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '
 import { TaskServiceService } from '../../../services/task-service.service';
 import { Task, User } from '../../types';
 import { FormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-task',
-  imports: [FormsModule, NgFor],
+  imports: [FormsModule, NgFor, NgIf],
   templateUrl: './add-task.component.html',
   styleUrl: './add-task.component.css',
 })
 export class AddTaskComponent implements OnInit {
+
+  errorMessageForUser: string | null = null;
+  successfullMessageForUser: string | null = null;
+  errorMessageForTask: string | null = null;
+  successfullMessageForTask: string | null = null;
 
   task: Task | null = {
     title: '',
@@ -22,6 +28,7 @@ export class AddTaskComponent implements OnInit {
 
   private taskService = inject(TaskServiceService);
   private destroy = inject(DestroyRef);
+  private router = inject(Router);
 
   users: User[] | null = [];
 
@@ -29,9 +36,11 @@ export class AddTaskComponent implements OnInit {
     const s2 = this.taskService.getAllUsers().subscribe({
       next: (data: any) => {
         this.users = data;
-        // console.log('Users loaded:', this.users);
+        this.successfullMessageForUser = 'received user'
       },
-      error: (err) => console.error('Error loading tasks:', err)
+      error: () => {
+        this.errorMessageForUser = 'Failed to load users. Please try again later.';
+      }
     });
 
     this.destroy.onDestroy(() => {
@@ -40,7 +49,21 @@ export class AddTaskComponent implements OnInit {
   }
 
   onSubmit() {
-    const addTask = this.taskService.addTask(this.task!).subscribe();
-    console.log(addTask);
+    const addTask = this.taskService.addTask(this.task!).subscribe({
+      next: () => {
+        this.successfullMessageForTask = 'task added successfully';
+
+        setTimeout(() => {
+          this.router.navigate(['/admin', 'all-task']);
+        }, 1500)
+      },
+      error: () => {
+        this.errorMessageForTask = 'task not added';
+      }
+    });
+
+    this.destroy.onDestroy(() => {
+      addTask.unsubscribe();
+    })
   }
 }

@@ -1,4 +1,4 @@
-import { inject, Pipe, PipeTransform } from '@angular/core';
+import { DestroyRef, inject, Pipe, PipeTransform } from '@angular/core';
 import { TaskServiceService } from '../services/task-service.service';
 import { User } from './types';
 
@@ -8,6 +8,7 @@ import { User } from './types';
 export class UserNamePipePipe implements PipeTransform {
 
   private taskService = inject(TaskServiceService);
+  private destroyRef = inject(DestroyRef);
 
   users: User[] | null = [];
 
@@ -20,6 +21,10 @@ export class UserNamePipePipe implements PipeTransform {
       },
       error: (err) => console.error('Error loading tasks:', err)
     });
+
+    this.destroyRef.onDestroy(() => {
+      s2.unsubscribe();
+    })
   }
 
   transform(userId: number): string {

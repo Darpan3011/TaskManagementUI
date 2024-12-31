@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthServiceService } from '../../services/auth-service.service';
 import { jwtDecode } from 'jwt-decode'; // Ensure correct import for jwtDecode
+import { NgIf } from '@angular/common';
 
 interface CustomJwtPayload {
   'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': string;
@@ -10,7 +11,7 @@ interface CustomJwtPayload {
 
 @Component({
   selector: 'app-unknown',
-  imports: [FormsModule],
+  imports: [FormsModule, NgIf],
   templateUrl: './unknown.component.html',
   styleUrls: ['./unknown.component.css'],
   standalone: true,
@@ -21,8 +22,10 @@ export class UnknownComponent {
   switchLogin = signal(true);
   username = '';
   password = '';
+  errorMessage = '';
 
   onSubmit() {
+    this.errorMessage = '';
     this.authService.loginFn(this.username, this.password).subscribe({
       next: (data: any) => {
         try {
@@ -43,11 +46,12 @@ export class UnknownComponent {
             this.router.navigate(['/unknown']);
           }
         } catch (error) {
-          console.error('Error decoding token:', error);
+          this.errorMessage = 'Invalid token received. Please try again.';
         }
       },
       error: (err) => {
-        console.error('Login error:', err);
+        this.errorMessage = 'Login failed.';
+
       },
     });
   }
@@ -58,7 +62,8 @@ export class UnknownComponent {
         console.log('Register success:', data);
       },
       error: (err) => {
-        console.error('Registration error:', err);
+        this.errorMessage = 'Registration failed. Please try again.';
+
       },
     });
   }
