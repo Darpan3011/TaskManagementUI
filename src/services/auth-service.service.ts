@@ -44,6 +44,10 @@ export class AuthServiceService {
     });
   }
 
+  refreshToken(refreshToken:string) {
+      return this.httpclient.post('https://localhost:7125/api/Authentication/RefreshToken', { refreshToken });
+  }
+
   logoutFn() {
     this.route.navigate(['/unknown']);
     localStorage.removeItem('Token');

@@ -95,14 +95,14 @@ export class TaskServiceService {
         });
     }
 
-    // getTasksByStatusForUser(taskTitle: string, status: number) {
-    //     const token = localStorage.getItem('Token');
-    //     const headers = new HttpHeaders({
-    //         Authorization: `Bearer ${token}`
-    //     });
-    //     return this.httpClient.get(`https://localhost:7125/api/User/tasks/${taskTitle}/status/?newStatus=${status}`, {
-    //         headers
-    //     });
-    // }
+    updateTaskStatusUser(taskTitle: string, status: number) {
+        const token = localStorage.getItem('Token');
+        const headers = new HttpHeaders({
+            Authorization: `Bearer ${token}`
+        });
+        return this.httpClient.put(`https://localhost:7125/api/Tasks/tasks/${taskTitle}/status/?newStatus=${status}`, {
+            headers
+        });
+    }
 
 }

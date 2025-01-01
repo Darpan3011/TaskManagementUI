@@ -18,11 +18,12 @@
                 </div>
             </div>
             <span [ngClass]="{
-          'task-status-done': task.status == 0,
+          'task-status-done': task.status == 2,
           'task-status-inProgress': task.status == 1,
-          'task-status-pending': task.status == 2
-        }">Status: {{ task.status }}</span>
+          'task-status-pending': task.status == 0
+        }">Status: {{ task.status| statusPipe }}</span>
             <p class="task-description">{{ task.description }}</p>
+            <p class="task-description">DueDate: {{ task.dueDate | date:'medium'}}</p>
             <span class="task-user-id">Assigned to: {{ task.userName }}</span>
         </li>
         }

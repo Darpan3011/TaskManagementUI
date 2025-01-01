@@ -9,14 +9,18 @@
             <div class="task-header">
                 <span class="task-title">{{task.title}}</span>
                 <div class="task-buttons">
-                    <a class="edit-button">Edit</a>
+                    <select [(ngModel)]="taskStatus" (change)="onStatusChange(task.title, task.status)">
+                        <option [value]="0">Pending</option>
+                        <option [value]="1">In Progress</option>
+                        <option [value]="2">Completed</option>
+                    </select>
                 </div>
             </div>
             <span [ngClass]="{
-                                'task-status-done': task.status == 0,
+                                'task-status-pending': task.status == 0,
                                 'task-status-inProgress': task.status == 1,
-                                'task-status-pending': task.status == 2
-                                }">Status: {{task.status}}</span>
+                                'task-status-done': task.status == 2
+                                }">Status: {{task.status | statusPipe}}</span>
             <p class="task-description">{{task.description}}</p>
         </li>
         }
