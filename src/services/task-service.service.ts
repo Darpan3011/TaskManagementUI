@@ -15,7 +15,7 @@ export class TaskServiceService {
             Authorization: `Bearer ${token}`
         });
 
-        return this.httpClient.get('https://localhost:7125/api/Admin/tasks', {
+        return this.httpClient.get('https://localhost:7125/api/Tasks', {
             headers
         });
     }
@@ -26,7 +26,7 @@ export class TaskServiceService {
             Authorization: `Bearer ${token}`
         });
 
-        return this.httpClient.put('https://localhost:7125/api/Admin/EditTheTask', task, {
+        return this.httpClient.put('https://localhost:7125/api/Tasks/edit', task, {
             headers
         });
     }
@@ -37,7 +37,7 @@ export class TaskServiceService {
             Authorization: `Bearer ${token}`
         });
 
-        return this.httpClient.post('https://localhost:7125/api/Admin/AddTask', task, {
+        return this.httpClient.post('https://localhost:7125/api/Tasks/add', task, {
             headers
         });
     }
@@ -48,7 +48,7 @@ export class TaskServiceService {
             Authorization: `Bearer ${token}`
         });
 
-        return this.httpClient.get('https://localhost:7125/api/Admin/GetAllUsers', {
+        return this.httpClient.get('https://localhost:7125/api/Tasks/users', {
             headers
         });
     }
@@ -59,50 +59,50 @@ export class TaskServiceService {
             Authorization: `Bearer ${token}`
         });
 
-        return this.httpClient.delete(`https://localhost:7125/api/Admin/DeleteTask/${title}`, {
+        return this.httpClient.delete(`https://localhost:7125/api/Tasks/delete/${title}`, {
             headers
         });
     }
 
-    getAllTasksByDueDate(date: string) {
-        const token = localStorage.getItem('Token');
-        const headers = new HttpHeaders({
-            Authorization: `Bearer ${token}`
-        });
+    // getAllTasksByDueDate(date: string) {
+    //     const token = localStorage.getItem('Token');
+    //     const headers = new HttpHeaders({
+    //         Authorization: `Bearer ${token}`
+    //     });
 
-        return this.httpClient.get(`https://localhost:7125/api/Admin/GetAllTaskByDueDate/${date}`, {
-            headers
-        });
-    }
+    //     return this.httpClient.get(`https://localhost:7125/api/Admin/GetAllTaskByDueDate/${date}`, {
+    //         headers
+    //     });
+    // }
 
-    getAllTaskByStatus(status: string) {
-        const token = localStorage.getItem('Token');
-        const headers = new HttpHeaders({
-            Authorization: `Bearer ${token}`
-        });
-        return this.httpClient.get(`https://localhost:7125/api/Admin/GetAllTaskByStatus/${status}`, {
-            headers
-        });
-    }
+    // getAllTaskByStatus(status: string) {
+    //     const token = localStorage.getItem('Token');
+    //     const headers = new HttpHeaders({
+    //         Authorization: `Bearer ${token}`
+    //     });
+    //     return this.httpClient.get(`https://localhost:7125/api/Admin/GetAllTaskByStatus/${status}`, {
+    //         headers
+    //     });
+    // }
 
     getTasksByUserID(UserID: string) {
         const token = localStorage.getItem('Token');
         const headers = new HttpHeaders({
             Authorization: `Bearer ${token}`
         });
-        return this.httpClient.get(`https://localhost:7125/api/Admin/GetTasksByUserID/?UserID=${UserID}`, {
+        return this.httpClient.get(`https://localhost:7125/api/Tasks/tasks/id/?UserID=${UserID}`, {
             headers
         });
     }
 
-    getTasksByStatusForUser(taskTitle: string, status: number) {
-        const token = localStorage.getItem('Token');
-        const headers = new HttpHeaders({
-            Authorization: `Bearer ${token}`
-        });
-        return this.httpClient.get(`https://localhost:7125/api/User/tasks/${taskTitle}/status/?newStatus=${status}`, {
-            headers
-        });
-    }
+    // getTasksByStatusForUser(taskTitle: string, status: number) {
+    //     const token = localStorage.getItem('Token');
+    //     const headers = new HttpHeaders({
+    //         Authorization: `Bearer ${token}`
+    //     });
+    //     return this.httpClient.get(`https://localhost:7125/api/User/tasks/${taskTitle}/status/?newStatus=${status}`, {
+    //         headers
+    //     });
+    // }
 
 }
