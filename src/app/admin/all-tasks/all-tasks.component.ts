@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { TaskServiceService } from '../../../services/task-service.service';
 import { FormsModule } from '@angular/forms';
-import { NgClass, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgIf } from '@angular/common';
 import { Task, TaskWithUserName, User } from '../../types';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { StatusPipe } from '../../status.pipe';
 
 @Component({
   selector: 'app-all-tasks',
-  imports: [FormsModule, NgClass, RouterLink, RouterOutlet, NgIf],
+  imports: [FormsModule, NgClass, RouterLink, RouterOutlet, NgIf, DatePipe, StatusPipe],
   templateUrl: './all-tasks.component.html',
   styleUrls: ['./all-tasks.component.css'],
 })

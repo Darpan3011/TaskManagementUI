@@ -28,6 +28,7 @@ export const routes: Routes = [
         path: 'user',
         component: UserComponent,
         children: [
+            { path: '', redirectTo: 'all-task', pathMatch: 'full' },
             { path: 'all-task', component: AllTasksComponent }
         ]
     },
