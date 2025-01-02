@@ -49,7 +49,7 @@ export class AuthServiceService {
   }
 
   logoutFn() {
-    this.route.navigate(['/RegisterLogin']);
+    this.route.navigate(['/auth', 'login']);
     localStorage.removeItem('Token');
     localStorage.removeItem('refreshToken');
     this._isAuthenticated.set(false);

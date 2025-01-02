@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { AuthServiceService } from '../../../services/auth-service.service';
+import { Router, RouterModule } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 import { FormsModule } from '@angular/forms';
-import { AuthServiceService } from '../../services/auth-service.service';
-import { jwtDecode } from 'jwt-decode'; // Ensure correct import for jwtDecode
 import { NgIf } from '@angular/common';
 
 interface CustomJwtPayload {
@@ -10,13 +10,13 @@ interface CustomJwtPayload {
 }
 
 @Component({
-  selector: 'app-RegisterLogin',
-  imports: [FormsModule, NgIf],
-  templateUrl: './RegisterLogin.component.html',
-  styleUrls: ['./RegisterLogin.component.css'],
-  standalone: true,
+  selector: 'app-login',
+  imports: [FormsModule, NgIf, RouterModule],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css',
 })
-export class RegisterLoginComponent {
+export class LoginComponent {
+
   private authService = inject(AuthServiceService);
   private router = inject(Router);
   switchLogin = signal(true);
@@ -39,11 +39,11 @@ export class RegisterLoginComponent {
           this.authService._userName.set(this.username);
 
           if (role === 'Admin') {
-            this.router.navigate(['/admin', 'all-task']);
+            this.router.navigate(['../', 'admin', 'all-task']);
           } else if (role === 'User') {
-            this.router.navigate(['/user', 'all-task']);
+            this.router.navigate(['../', 'user', 'all-task']);
           } else {
-            this.router.navigate(['/unknown']);
+            this.router.navigate(['../', 'auth', 'login']);
           }
         } catch (error) {
           this.errorMessage = 'Invalid token received. Please try again.';
@@ -51,24 +51,7 @@ export class RegisterLoginComponent {
       },
       error: (err) => {
         this.errorMessage = 'Login failed.';
-
       },
     });
-  }
-
-  onRegister() {
-    this.authService.RegisterFn(this.username, this.password).subscribe({
-      next: (data: any) => {
-        console.log('Register success:', data);
-      },
-      error: (err) => {
-        this.errorMessage = 'Registration failed. Please try again.';
-
-      },
-    });
-  }
-
-  switchLoginMethod() {
-    this.switchLogin.set(!this.switchLogin());
   }
 }

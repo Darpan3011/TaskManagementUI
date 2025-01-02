@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         if (this.authservice._userType() === 'Unknown') {
             console.log("I worked 😊");
-            this.router.navigate(['/RegisterLogin']);
+            this.router.navigate(['/auth', 'login']);
             return false;
         }
         return true;
