@@ -3,9 +3,9 @@
 
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-    @if(filteredTasks && filteredTasks.length > 0) {
+    @if(tasks && tasks.length > 0) {
     <ul class="task-list">
-        @for(task of filteredTasks; track task.title) {
+        @for(task of tasks; track task.title) {
         <li class="task-item">
             <div class="task-header">
                 <span class="task-title">{{ task.title }}</span>
@@ -23,7 +23,7 @@
           'task-status-pending': task.status == 0
         }">Status: {{ task.status| statusPipe }}</span>
             <p class="task-description">{{ task.description }}</p>
-            <p class="task-description">DueDate: {{ task.dueDate | date:'medium'}}</p>
+            <p class="task-description">DueDate: {{ task.dueDate | date:'shortDate'}}</p>
             <span class="task-user-id">Assigned to: {{ task.userName }}</span>
         </li>
         }

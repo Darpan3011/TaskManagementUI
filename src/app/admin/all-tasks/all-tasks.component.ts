@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { TaskServiceService } from '../../../services/task-service.service';
 import { FormsModule } from '@angular/forms';
 import { DatePipe, NgClass, NgIf } from '@angular/common';
@@ -19,40 +19,24 @@ export class FilterTaskComponent implements OnInit {
 
   searchtext = '';
   errorMessage: string | null = null;
-  users: User[] | null = null;
-  alltasks: Task[] | null = null;
-  tasksWithUserName: TaskWithUserName[] = [];
-  tasks$ = this.taskService.getAllTasks();
-
+  tasks: TaskWithUserName[] = [];
 
   get filteredTasks() {
-    return this.tasksWithUserName?.filter((task: TaskWithUserName) =>
+    return this.tasks?.filter((task: TaskWithUserName) =>
       task.title.toLowerCase().includes(this.searchtext.toLowerCase())
     );
   }
 
   ngOnInit() {
 
-    const s2 = this.taskService.getAllUsers().subscribe({
+    const s2 = this.taskService.filterTasks(null, null, null).subscribe({
       next: (data: any) => {
-        this.users = data;
-        this.mapTasksWithUserNames();
+        this.tasks = data;
       },
-      error: (err) => this.errorMessage = 'Failed to load users. Please try again.'
-    });
-
-
-    const s1 = this.tasks$.subscribe({
-      next: (data: any) => {
-        this.alltasks = data;
-        this.mapTasksWithUserNames();
-      },
-      error: (err) => this.errorMessage = 'Failed to load users. Please try again.'
     });
 
     this.destroy.onDestroy(() => {
       s2.unsubscribe();
-      s1.unsubscribe();
     })
   }
 
@@ -65,18 +49,4 @@ export class FilterTaskComponent implements OnInit {
     });
   }
 
-  private mapTasksWithUserNames() {
-    if (this.alltasks && this.users) {
-      this.tasksWithUserName = this.alltasks.map((task) => {
-        const user = this.users?.find((u) => u.userId === task.userId.toString());
-        return {
-          title: task.title,
-          description: task.description,
-          status: task.status,
-          userName: user ? user.userName : 'Unknown',
-          dueDate: task.dueDate,
-        } as TaskWithUserName;
-      });
-    }
-  }
 }

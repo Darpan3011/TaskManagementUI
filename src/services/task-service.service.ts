@@ -105,4 +105,21 @@ export class TaskServiceService {
         });
     }
 
+    filterTasks(title: string | null, dueDate: string | null, status: number | null) {
+        const token = localStorage.getItem('Token');
+        const headers = new HttpHeaders({
+            Authorization: `Bearer ${token}`
+        });
+
+        // Prepare query parameters
+        const params = new URLSearchParams();
+        if (title) params.append('title', title);
+        if (dueDate) params.append('dueDate', dueDate);
+        if (status !== null && status !== undefined) params.append('status', status.toString());
+
+        const queryString = params.toString();
+        return this.httpClient.get(`https://localhost:7125/api/Tasks/filter?${queryString}`, { headers });
+    }
+
+
 }
