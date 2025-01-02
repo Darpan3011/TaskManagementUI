@@ -10,13 +10,13 @@ interface CustomJwtPayload {
 }
 
 @Component({
-  selector: 'app-unknown',
+  selector: 'app-RegisterLogin',
   imports: [FormsModule, NgIf],
-  templateUrl: './unknown.component.html',
-  styleUrls: ['./unknown.component.css'],
+  templateUrl: './RegisterLogin.component.html',
+  styleUrls: ['./RegisterLogin.component.css'],
   standalone: true,
 })
-export class UnknownComponent {
+export class RegisterLoginComponent {
   private authService = inject(AuthServiceService);
   private router = inject(Router);
   switchLogin = signal(true);

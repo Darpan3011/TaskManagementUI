@@ -1,32 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service.service';
-import { RouterOutlet, Router } from '@angular/router';
+import { RouterOutlet, Router, RouterModule } from '@angular/router';
+import { AuthGuard } from '../guards/auth-guard.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  standalone: true
+  standalone: true,
+  providers: [AuthServiceService, AuthGuard]
 })
-export class AppComponent {
-  private authService = inject(AuthServiceService);
-  private router = inject(Router);
-
-  ngOnInit() {
-    const userType = this.authService.currUserType();
-
-    switch (userType()) {
-      case 'Admin':
-        this.router.navigate(['/admin']);
-        break;
-      case 'User':
-        this.router.navigate(['/user']);
-        break;
-      case 'Unknown':
-      default:
-        this.router.navigate(['/unknown']);
-        break;
-    }
-  }
-}
+export class AppComponent { }

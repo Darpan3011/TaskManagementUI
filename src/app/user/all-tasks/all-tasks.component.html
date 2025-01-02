@@ -9,7 +9,9 @@
             <div class="task-header">
                 <span class="task-title">{{task.title}}</span>
                 <div class="task-buttons">
+                    <label class="change-status-label">Change Status:</label>
                     <select [(ngModel)]="taskStatus" (change)="onStatusChange(task.title, task.status)">
+                        <option [value]="null" disabled selected>Select an option</option>
                         <option [value]="0">Pending</option>
                         <option [value]="1">In Progress</option>
                         <option [value]="2">Completed</option>
@@ -26,6 +28,13 @@
         }
     </ul>
     } @else {
-        <p>No Tasks found.</p>
+    <p>No Tasks found.</p>
     }
+
+    @if(isSuccess){<div class="success-message">
+        Updated the task successfully.
+    </div>}
+    @if(isError){<div class="error-message">
+        Failed to update the task.
+    </div>}
 </div>

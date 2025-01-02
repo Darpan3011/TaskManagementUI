@@ -3,8 +3,8 @@ import { TaskServiceService } from '../../../services/task-service.service';
 import { Task } from '../../types';
 import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
-import { StatusPipe } from '../../status.pipe';
-import { Router } from '@angular/router';
+import { StatusPipe } from '../../../pipes/status.pipe';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-tasks',
@@ -17,7 +17,9 @@ export class AllTasksComponent implements OnInit {
   searchtext = '';
   private taskService = inject(TaskServiceService);
   private router = inject(Router);
-  taskStatus = signal<number>(0);
+  isSuccess = false;
+  isError = false;
+  taskStatus = signal<number | null>(null);
 
   get filteredTasks() {
     return this.alltasks?.filter((task: any) =>
@@ -27,7 +29,7 @@ export class AllTasksComponent implements OnInit {
 
   alltasks: Task[] | null = null;
 
-  tasks$ = this.taskService.getAllTasks();
+  tasks$ = this.taskService.filterTasks(null, null, null);
 
   ngOnInit() {
     this.tasks$.subscribe({
@@ -39,13 +41,30 @@ export class AllTasksComponent implements OnInit {
 
   }
 
-
   onStatusChange(taskTitle: string, status: number) {
     const newStatus = Number(this.taskStatus());
     this.taskService.updateTaskStatusUser(taskTitle, newStatus).subscribe({
-      next: () => console.log("updated")
-      
-      
+      next: () => {
+        const currentUrl = this.router.url;
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate([currentUrl]);
+        });
+        this.isSuccess = true;
+        setTimeout(() => {
+          this.isSuccess = false;
+        }, 3000);
+      },
+      error: (err) => {
+        this.isError = true;
+        setTimeout(() => {
+          this.isError = false;
+        }, 3000);
+      }
     });
+  }
 }
-}
+
+// const currentUrl = this.router.url;
+// this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+//   this.router.navigate([currentUrl]);
+// });

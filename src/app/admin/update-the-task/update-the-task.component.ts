@@ -23,7 +23,7 @@ export class UpdateTheTaskComponent implements OnInit {
 
   users: User[] | null = [];
 
-  task?: Task;
+  task!: Task;
 
   ngOnInit() {
     const s2 = this.taskService.getAllUsers().subscribe({

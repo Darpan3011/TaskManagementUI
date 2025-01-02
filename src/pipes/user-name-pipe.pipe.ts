@@ -1,6 +1,6 @@
 import { DestroyRef, inject, Pipe, PipeTransform } from '@angular/core';
 import { TaskServiceService } from '../services/task-service.service';
-import { User } from './types';
+import { User } from '../app/types';
 
 @Pipe({
   name: 'userNamePipe'

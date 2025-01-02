@@ -31,7 +31,6 @@ function globalHttpInterceptor(request: HttpRequest<unknown>, next: HttpHandlerF
         if (refreshToken) {
           return authService.refreshToken(refreshToken).pipe(
             switchMap((response: any) => {
-              // Save the new tokens
               localStorage.setItem('Token', response.token);
               localStorage.setItem('refreshToken', response.refreshToken);
 

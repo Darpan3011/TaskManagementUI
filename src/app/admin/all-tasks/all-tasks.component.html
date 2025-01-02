@@ -3,9 +3,9 @@
 
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-    @if(tasks && tasks.length > 0) {
+    @if(filteredTasks && filteredTasks.length > 0) {
     <ul class="task-list">
-        @for(task of tasks; track task.title) {
+        @for(task of filteredTasks; track task.title) {
         <li class="task-item">
             <div class="task-header">
                 <span class="task-title">{{ task.title }}</span>
