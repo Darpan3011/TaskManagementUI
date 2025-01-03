@@ -9,12 +9,12 @@ import { AuthServiceService } from '../../services/auth-service.service';
 })
 export class HeaderComponent {
   private authService = inject(AuthServiceService);
-  
+
 
   userName = this.authService._userName();
 
   logout() {
     this.authService.logoutFn();
-    
+
   }
 }

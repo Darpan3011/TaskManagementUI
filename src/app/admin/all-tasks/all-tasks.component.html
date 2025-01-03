@@ -1,11 +1,24 @@
 <div class="container">
-    <input type="text" [(ngModel)]="searchtext" placeholder="Search tasks..." class="search-input" />
+
+    <form (ngSubmit)="onSearchTask()" [formGroup]="form">
+        <input type="text" name="title" placeholder="Title" formControlName="title">
+
+        <input type="date" name="date" placeholder="yyyy-mm-dd" formControlName="date">
+
+        <select name="status" formControlName="status">
+            <option [value]="null">Selet an option</option>
+            <option [value]="0">Pending</option>
+            <option [value]="1">In Progress</option>
+            <option [value]="2">Completed</option>
+        </select>
+        <button type="submit">Search Task</button>
+    </form>
 
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-    @if(filteredTasks && filteredTasks.length > 0) {
+    @if(tasks && tasks.length > 0) {
     <ul class="task-list">
-        @for(task of filteredTasks; track task.title) {
+        @for(task of tasks; track task.title) {
         <li class="task-item">
             <div class="task-header">
                 <span class="task-title">{{ task.title }}</span>

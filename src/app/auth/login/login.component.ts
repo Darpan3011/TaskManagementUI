@@ -42,7 +42,7 @@ export class LoginComponent {
             this.router.navigate(['../', 'admin', 'all-task']);
           } else if (role === 'User') {
             this.router.navigate(['../', 'user', 'all-task']);
-          } else {
+          } else if (role === 'Unknown') {
             this.router.navigate(['../', 'auth', 'login']);
           }
         } catch (error) {

@@ -22,11 +22,16 @@ export class AuthServiceService {
   private httpclient = inject(HttpClient);
 
   constructor() {
-    if (localStorage.getItem('Token')) {
+    if (localStorage.getItem('Token') && localStorage.getItem('refreshToken')) {
       this._isAuthenticated.set(true);
       const token = jwtDecode<CustomJwtPayload>(localStorage.getItem('Token')!.toString());
       const role = token['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
       this._userType.set(role as "Admin" | "User" | "Unknown")
+    } else {
+      this._isAuthenticated.set(false);
+      this._userType.set('Unknown');
+      this.route.navigate(['/auth', 'login']);
+
     }
   }
 
@@ -49,11 +54,11 @@ export class AuthServiceService {
   }
 
   logoutFn() {
-    this.route.navigate(['/auth', 'login']);
     localStorage.removeItem('Token');
     localStorage.removeItem('refreshToken');
     this._isAuthenticated.set(false);
     this._userType.set('Unknown');
     this._userName.set('');
+    this.route.navigate(['/auth', 'login']);
   }
 }

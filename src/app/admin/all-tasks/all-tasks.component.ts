@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { TaskServiceService } from '../../../services/task-service.service';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe, NgClass, NgIf } from '@angular/common';
 import { Task, TaskWithUserName, User } from '../../types';
 import { RouterLink, RouterOutlet } from '@angular/router';
@@ -8,7 +8,7 @@ import { StatusPipe } from '../../../pipes/status.pipe';
 
 @Component({
   selector: 'app-all-tasks',
-  imports: [FormsModule, NgClass, RouterLink, RouterOutlet, NgIf, DatePipe, StatusPipe],
+  imports: [FormsModule, NgClass, RouterLink, RouterOutlet, NgIf, DatePipe, StatusPipe, ReactiveFormsModule],
   templateUrl: './all-tasks.component.html',
   styleUrls: ['./all-tasks.component.css'],
 })
@@ -17,15 +17,15 @@ export class FilterTaskComponent implements OnInit {
   private taskService = inject(TaskServiceService);
   private destroy = inject(DestroyRef);
 
+  form = new FormGroup({
+    title: new FormControl<string | null>(null),
+    date: new FormControl<string | null>(null),
+    status: new FormControl<number | null>(null),
+  });
+
   searchtext = '';
   errorMessage: string | null = null;
-  tasks: TaskWithUserName[] = [];
-
-  get filteredTasks() {
-    return this.tasks?.filter((task: TaskWithUserName) =>
-      task.title.toLowerCase().includes(this.searchtext.toLowerCase())
-    );
-  }
+  tasks: TaskWithUserName[] | null = [];
 
   ngOnInit() {
 
@@ -48,5 +48,27 @@ export class FilterTaskComponent implements OnInit {
       },
     });
   }
+
+
+  onSearchTask() {
+    console.log(this.form.value);
+
+
+    const title = this.form.value.title ? this.form.value.title : null;
+    const date = this.form.value.date ? this.form.value.date : null;
+    const status = this.form.value.status ? this.form.value.status : null;
+
+    this.taskService.filterTasks(title, date, status).subscribe({
+      next: (data: any) => {
+        this.tasks = data;
+      },
+      error: (err) => {
+        this.tasks = null;
+      }
+    });
+  }
+
+
+
 
 }
