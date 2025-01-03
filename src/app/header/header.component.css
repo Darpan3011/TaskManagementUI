@@ -1,54 +1,68 @@
-/* Header container */
 header {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-bottom: 2px solid #ccc;
+}
+
+.user-info {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #007bff;
-    /* Primary color */
-    color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: 'Poppins', sans-serif;
+    justify-content: space-between;
+    margin-bottom: 15px;
 }
 
-/* Username styling */
-header h4 {
+.user-info h4 {
     margin: 0;
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
 }
 
-/* Logout button styling */
-header button {
+.user-info button {
+    margin-left: 15px;
     padding: 8px 15px;
-    background-color: #ffffff;
-    color: #007bff;
-    border: 1px solid #ffffff;
-    border-radius: 3px;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
-/* Hover effect for the button */
-header button:hover {
+.user-info button:hover {
     background-color: #0056b3;
-    color: #ffffff;
 }
 
-/* Responsive adjustments */
-@media (max-width: 500px) {
-    header {
-        flex-direction: column;
-        text-align: center;
-    }
+.navigation {
+    display: flex;
+    justify-content: flex-start;
+}
 
-    header h4 {
-        margin-bottom: 10px;
-    }
+.nav-link {
+    margin-right: 20px;
+    text-decoration: none;
+    color: #007bff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
 
-    header button {
-        width: 100%;
-    }
+.nav-link:hover {
+    color: #0056b3;
+    /* text-decoration: underline; */
+}
+
+.router-link-active {
+    font-weight: bold;
+    color: #0056b3;
+}
+
+.router-link-active:hover {
+    color: #003366;
+}
+
+.router-link-active {
+    display: inline-block !important;
+    /* This might override your directive */
 }

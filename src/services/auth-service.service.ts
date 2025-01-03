@@ -16,7 +16,18 @@ export class AuthServiceService {
 
   _isAuthenticated = signal(false);
   _userType = signal<'Admin' | 'User' | 'Unknown'>('Unknown');
-  _userName = signal('');
+  _userName = signal(localStorage.getItem('userName') || ''); // Default to localStorage value
+  get userName() {
+    return this._userName();
+  }
+  set userName(value: string) {
+    this._userName.set(value);  // Update the signal
+    localStorage.setItem('userName', value);  // Also update localStorage
+  }
+
+  get userType() {
+    return this._userType.asReadonly();
+  }
 
   currUserType = computed(() => this._userType.asReadonly());
   private httpclient = inject(HttpClient);
@@ -58,7 +69,7 @@ export class AuthServiceService {
     localStorage.removeItem('refreshToken');
     this._isAuthenticated.set(false);
     this._userType.set('Unknown');
-    this._userName.set('');
+    localStorage.removeItem('userName');
     this.route.navigate(['/auth', 'login']);
   }
 }

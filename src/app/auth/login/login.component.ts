@@ -37,6 +37,7 @@ export class LoginComponent {
 
           this.authService._userType.set(role as 'Admin' | 'User' | 'Unknown');
           this.authService._userName.set(this.username);
+          localStorage.setItem('userName', this.username);
 
           if (role === 'Admin') {
             this.router.navigate(['../', 'admin', 'all-task']);
