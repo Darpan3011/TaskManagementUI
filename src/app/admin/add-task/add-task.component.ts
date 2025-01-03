@@ -1,15 +1,15 @@
 import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { TaskServiceService } from '../../../services/task-service.service';
 import { Task, User } from '../../types';
-import { FormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-task',
-  imports: [FormsModule, NgFor, NgIf],
+  imports: [ReactiveFormsModule, NgFor, NgIf, NgClass],
   templateUrl: './add-task.component.html',
-  styleUrl: './add-task.component.css',
+  styleUrls: ['./add-task.component.css'],
 })
 export class AddTaskComponent implements OnInit {
 
@@ -18,13 +18,13 @@ export class AddTaskComponent implements OnInit {
   errorMessageForTask: string | null = null;
   successfullMessageForTask: string | null = null;
 
-  task: Task | null = {
-    title: '',
-    description: '',
-    status: 0,
-    userId: 0,
-    dueDate: ''
-  };
+  form = new FormGroup({
+    title: new FormControl<string | null>(null, [Validators.required]),
+    description: new FormControl<string | null>(null, [Validators.required, Validators.minLength(4)]),
+    status: new FormControl<number | null>(0, [Validators.required]),
+    userId: new FormControl<number | null>(null, [Validators.required]),
+    dueDate: new FormControl<string | null>(null, [Validators.required]),
+  });
 
   private taskService = inject(TaskServiceService);
   private destroy = inject(DestroyRef);
@@ -49,7 +49,14 @@ export class AddTaskComponent implements OnInit {
   }
 
   onSubmit() {
-    const addTask = this.taskService.addTask(this.task!).subscribe({
+    let task: Task = {
+      title: this.form.value.title!,
+      description: this.form.value.description!,
+      status: this.form.value.status!,
+      userId: this.form.value.userId!,
+      dueDate: this.form.value.dueDate!,
+    };
+    const addTask = this.taskService.addTask(task!).subscribe({
       next: () => {
         this.successfullMessageForTask = 'task added successfully';
 

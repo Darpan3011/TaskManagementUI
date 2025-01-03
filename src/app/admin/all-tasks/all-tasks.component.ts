@@ -23,7 +23,6 @@ export class FilterTaskComponent implements OnInit {
     status: new FormControl<number | null>(null),
   });
 
-  searchtext = '';
   errorMessage: string | null = null;
   tasks: TaskWithUserName[] | null = [];
 
@@ -51,9 +50,6 @@ export class FilterTaskComponent implements OnInit {
 
 
   onSearchTask() {
-    console.log(this.form.value);
-
-
     const title = this.form.value.title ? this.form.value.title : null;
     const date = this.form.value.date ? this.form.value.date : null;
     const status = this.form.value.status ? this.form.value.status : null;
@@ -66,6 +62,7 @@ export class FilterTaskComponent implements OnInit {
         this.tasks = null;
       }
     });
+    
   }
 
 

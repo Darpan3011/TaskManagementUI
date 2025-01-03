@@ -1,14 +1,31 @@
 <div class="auth-container">
 
     <h1>Register</h1>
-    <form (ngSubmit)="onRegister()">
+    <form (ngSubmit)="onRegister()" [formGroup]="form">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" [(ngModel)]="username" required />
+        <input type="text" id="username" name="username" formControlName="username" />
+        <span *ngIf="form.get('username')?.invalid&&form.get('username')?.touched">
+            Username is required
+        </span>
 
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" [(ngModel)]="password" required />
+        <input type="password" id="password" name="password" formControlName="password" />
+        <div *ngIf="form.get('password')?.touched && form.get('password')?.errors">
+            <span *ngIf="form.get('password')?.hasError('PasswordRequiresUpper')">
+                {{ form.get('password')?.getError('PasswordRequiresUpper') }}
+            </span>
+            <span *ngIf="form.get('password')?.hasError('PasswordRequiresDigit')">
+                {{ form.get('password')?.getError('PasswordRequiresDigit') }}
+            </span>
+            <span *ngIf="form.get('password')?.hasError('PasswordRequiresNonAlphanumeric')">
+                {{ form.get('password')?.getError('PasswordRequiresNonAlphanumeric') }}
+            </span>
+        </div>
 
-        <button type="submit">Register</button>
+        <button type="submit" [ngClass]="{'invalidform': form.invalid }" [disabled]="form.invalid">
+            Register
+        </button>
+
         <button type="button" [routerLink]="[ '../', 'login']">Want to Login</button>
     </form>
     <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>

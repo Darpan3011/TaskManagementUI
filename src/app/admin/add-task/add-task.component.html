@@ -1,22 +1,57 @@
-<form (ngSubmit)="onSubmit()">
-    <label for="task-title">Task title</label>
-    <input class="task-title" name="task-title" [(ngModel)]="task!.title" />
+<form (ngSubmit)="onSubmit()" class="task-form" [formGroup]="form">
+    <div class="form-group">
+        <label for="task-title">Task Title</label>
+        <input class="task-title" name="task-title" type="text" formControlName="title"
+            [ngClass]="{'is-invalid': form.get('title')?.invalid && form.get('title')?.touched}" />
+        <span *ngIf="form.get('title')?.hasError('required') && form.get('title')?.touched" class="error-message">
+            Task title is required.
+        </span>
+    </div>
 
-    <label for="task-status">Task Status</label>
-    <input name="task-status" type="number" [(ngModel)]="task!.status" />
+    <div class="form-group">
+        <label for="task-status">Task Status</label>
+        <input name="task-status" type="number" formControlName="status"
+            [ngClass]="{'is-invalid': form.get('status')?.invalid && form.get('status')?.touched}" />
+        <span *ngIf="form.get('status')?.hasError('required') && form.get('status')?.touched" class="error-message">
+            Task status is required.
+        </span>
+    </div>
 
-    <label for="task-description">Task Description</label>
-    <input class="task-description" id="task-description" name="taskDescription" [(ngModel)]="task!.description" />
+    <div class="form-group">
+        <label for="task-description">Task Description</label>
+        <textarea class="task-description" id="task-description" name="taskDescription" formControlName="description"
+            [ngClass]="{'is-invalid': form.get('description')?.invalid && form.get('description')?.touched}"></textarea>
+        <span *ngIf="form.get('description')?.hasError('required') && form.get('description')?.touched"
+            class="error-message">
+            Task description is required.
+        </span>
+        <span *ngIf="form.get('description')?.hasError('minlength') && form.get('description')?.touched"
+            class="error-message">
+            Task description must be at least 4 characters long.
+        </span>
+    </div>
 
-    <label for="task-user-id">Assigned to</label>
-    <select [(ngModel)]="task!.userId" name="task-user-id">
-        <option *ngFor="let user of users" [value]="user!.userId">{{user!.userName}}</option>
-    </select>
+    <div class="form-group">
+        <label for="task-user-id">Assigned To</label>
+        <select formControlName="userId" name="task-user-id"
+            [ngClass]="{'is-invalid': form.get('userId')?.invalid && form.get('userId')?.touched}">
+            <option *ngFor="let user of users" [value]="user!.userId">{{ user!.userName }}</option>
+        </select>
+        <span *ngIf="form.get('userId')?.hasError('required') && form.get('userId')?.touched" class="error-message">
+            Please select a user.
+        </span>
+    </div>
 
-    <label for="task-date">Due Date</label>
-    <input class="task-date" name="task-date" type="date" [(ngModel)]="task!.dueDate" />
+    <div class="form-group">
+        <label for="task-date">Due Date</label>
+        <input class="task-date" name="task-date" type="date" formControlName="dueDate"
+            [ngClass]="{'is-invalid': form.get('dueDate')?.invalid && form.get('dueDate')?.touched}" />
+        <span *ngIf="form.get('dueDate')?.hasError('required') && form.get('dueDate')?.touched" class="error-message">
+            Due date is required.
+        </span>
+    </div>
 
-    <button type="submit">Submit</button>
+    <button type="submit" [disabled]="form.invalid">Submit</button>
 
     <div *ngIf="errorMessageForTask" class="error-message">
         {{ errorMessageForTask }}

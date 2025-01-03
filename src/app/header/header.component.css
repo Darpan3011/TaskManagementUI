@@ -1,25 +1,25 @@
 header {
-    padding: 20px;
     background-color: #f4f4f4;
     border-bottom: 2px solid #ccc;
+
 }
 
 .user-info {
     display: flex;
+    padding: 15px;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 15px;
+    background-color: #0056b3;
 }
 
 .user-info h4 {
     margin: 0;
     font-size: 1.5rem;
     font-weight: bold;
-    color: #333;
+    color: #c7c7c7;
 }
 
 .user-info button {
-    margin-left: 15px;
     padding: 8px 15px;
     font-size: 1rem;
     background-color: #007bff;
@@ -36,6 +36,7 @@ header {
 
 .navigation {
     display: flex;
+    padding: 15px 15px;
     justify-content: flex-start;
 }
 
@@ -50,7 +51,6 @@ header {
 
 .nav-link:hover {
     color: #0056b3;
-    /* text-decoration: underline; */
 }
 
 .router-link-active {
@@ -64,5 +64,4 @@ header {
 
 .router-link-active {
     display: inline-block !important;
-    /* This might override your directive */
 }
