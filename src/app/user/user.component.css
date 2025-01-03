@@ -1,45 +1,35 @@
-/* General container for navigation links */
-.navigation {
+.main-container {
     display: flex;
-    justify-content: start;
-    gap: 20px;
-    margin: 20px 0;
-    padding: 0px 20px;
-    font-family: 'Poppins', sans-serif;
+    height: 100vh; 
+    overflow: hidden; 
 }
 
-/* Styling for navigation links */
-.nav-link {
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 10px 20px;
-    border-radius: 5px;
-    color: #fff;
-    background-color: #007bff;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+.headerContainer {
+    width: 250px; 
+    height: 100vh; 
+    background-color: #f4f4f4;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.container {
+    flex: 1; 
+    display: flex;
+    flex-direction: column; 
+    height: 100vh; 
+    overflow-y: auto; 
+    box-sizing: border-box; 
+    padding: 20px; 
 }
 
-/* Hover effect for navigation links */
-.nav-link:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-}
-
-/* Responsive adjustments */
-@media (max-width: 600px) {
-    .navigation {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
+@media screen and (max-width: 768px) {
+    .headerContainer {
+        width: 100px; 
     }
 
-    .nav-link {
-        font-size: 14px;
-        padding: 8px 16px;
+    .container {
+        padding: 10px; 
     }
-}
-
-.router-link-active {
-    background-color: #0056b3;
 }

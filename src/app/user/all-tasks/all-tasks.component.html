@@ -1,4 +1,3 @@
-<div class="container">
 
     <form (ngSubmit)="onSearchTask()" [formGroup]="form">
         <input type="text" name="title" placeholder="Title" formControlName="title">
@@ -51,4 +50,3 @@
     @if(isError){<div class="error-message">
         Failed to update the task.
     </div>}
-</div>

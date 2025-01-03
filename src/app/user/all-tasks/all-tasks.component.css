@@ -1,34 +1,7 @@
-/* General styles for the search input */
-.search-input {
-    width: 100%;
-    max-width: 600px;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    outline: none;
-    box-sizing: border-box;
-    display: block;
-    margin: 20px auto;
-}
-
-/* Container styling */
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-/* Task list styles */
 ul.task-list {
     list-style-type: none;
-    padding: 0;
-    margin: 20px 0;
+    padding: 0px;
     width: 100%;
-    max-width: 600px;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -134,30 +107,14 @@ ul.task-list .task-item:hover {
     align-items: center;
 }
 
-/* Empty state message */
-p {
-    font-size: 16px;
-    color: #888;
-    /* text-align: center; */
-}
-
 /* Responsive adjustments */
 @media (max-width: 600px) {
-    .search-input {
-        padding: 8px;
-        font-size: 14px;
-    }
-
     ul.task-list .task-item {
         padding: 12px;
     }
 
     .task-title {
         font-size: 16px;
-    }
-
-    .task-status {
-        font-size: 13px;
     }
 
     .task-description {
@@ -192,83 +149,6 @@ select:focus {
 /* Remove arrow style in select (for customization) */
 select::-ms-expand {
     display: none;
-}
-
-/* Style for the placeholder option */
-select option[disabled] {
-    color: #888;
-    font-style: italic;
-}
-
-/* Apply specific styling for the select dropdown within task item */
-ul.task-list .task-item .task-buttons select {
-    width: auto;
-    /* Make sure it doesn't stretch too wide */
-    max-width: 100%;
-    font-family: 'Poppins', sans-serif;
-}
-
-.change-status-label {
-    font-size: 12px;
-    font-weight: bold;
-    color: #333;
-    /* margin-bottom: 5px; */
-    /* display: block; */
-    /* Ensures it is displayed on its own line */
-}
-
-
-/* Message styling */
-.success-message {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border-radius: 5px;
-    font-size: 16px;
-    z-index: 999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    animation: showMessage 3s forwards;
-}
-
-@keyframes showMessage {
-    0% {
-        opacity: 0;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
-.error-message {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 20px;
-    background-color: #df425c;
-    color: white;
-    border-radius: 5px;
-    font-size: 16px;
-    z-index: 999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    animation: showMessage 3s forwards;
 }
 
 form {
@@ -326,4 +206,11 @@ form button[type="submit"]:hover {
 
 form button[type="submit"]:active {
     transform: scale(0.98);
+}
+
+@media screen and (max-width: 768px) {
+    form {
+        display: flex;
+        flex-direction: column;
+    }
 }

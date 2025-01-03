@@ -7,8 +7,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   selector: 'app-admin',
   imports: [HeaderComponent, RouterOutlet, RouterModule],
   templateUrl: './admin.component.html',
-  styleUrl: './admin.component.css',
-  encapsulation: ViewEncapsulation.None
+  styleUrl: './admin.component.css'
 
 })
 export class AdminComponent {

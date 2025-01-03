@@ -1,4 +1,3 @@
-<div class="container">
 
     <form (ngSubmit)="onSearchTask()" [formGroup]="form">
         <input type="text" name="title" placeholder="Title" formControlName="title">
@@ -44,6 +43,5 @@
     } @else {
     <p>No tasks found.</p>
     }
-</div>
 
 <router-outlet />
