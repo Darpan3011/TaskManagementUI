@@ -1,67 +1,71 @@
-header {
+/* Sidebar (header) styling */
+.left-side-header {
+    /* width: 250px; */
+    width: 15%;
+    height: 100vh;
+    position: fixed;
+    /* Sidebar width */
     background-color: #f4f4f4;
-    border-bottom: 2px solid #ccc;
-
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    /* Stack elements vertically */
+    justify-content: space-between
+        /* padding: 20px 0; */
 }
 
+/* User Info */
 .user-info {
     display: flex;
-    padding: 15px;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    background-color: #0056b3;
+    margin-bottom: 20px;
 }
 
 .user-info h4 {
+    font-size: 16px;
     margin: 0;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #c7c7c7;
 }
 
-.user-info button {
-    padding: 8px 15px;
-    font-size: 1rem;
-    background-color: #007bff;
+/* Navigation styling */
+.navigation {
+    width: 100%;
+}
+
+.navigation .nav-link {
+    display: block;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.navigation .nav-link:hover {
+    background-color: #e2e2e2;
+}
+
+/* Logout button */
+.logout {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    /* margin-top: auto; */
+    /* Push logout button to the bottom */
+}
+
+.logout button {
+    padding: 8px;
+    width: max-content;
+    background-color: #28a745;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    margin-left: 20px;
 }
 
-.user-info button:hover {
-    background-color: #0056b3;
-}
-
-.navigation {
-    display: flex;
-    padding: 15px 15px;
-    justify-content: flex-start;
-}
-
-.nav-link {
-    margin-right: 20px;
-    text-decoration: none;
-    color: #007bff;
-    font-size: 1.1rem;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-    color: #0056b3;
-}
-
-.router-link-active {
-    font-weight: bold;
-    color: #0056b3;
-}
-
-.router-link-active:hover {
-    color: #003366;
-}
-
-.router-link-active {
-    display: inline-block !important;
+.logout button:hover {
+    background-color: #218838;
 }

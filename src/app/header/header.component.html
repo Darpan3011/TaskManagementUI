@@ -1,16 +1,24 @@
-<header>
-    <div class="user-info">
-        <h4>{{this.userName()}}</h4>
-        <button (click)="logout()">Logout</button>
+<header class="left-side-header">
+    <div>
+
+        <h4 class="user-info">{{this.userName()}}</h4>
+
+        <div class="navigation">
+            <ng-container *ngIf="this.isAdmin()">
+                <a [routerLink]="['/admin','all-task']" routerLinkActive="router-link-active" class="nav-link">All
+                    Tasks</a>
+                <a [routerLink]="['/admin','new-task']" routerLinkActive="router-link-active"
+                    [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Add Task</a>
+            </ng-container>
+
+            <ng-container *ngIf="!this.isAdmin()">
+                <a [routerLink]="['/user','all-task']" routerLinkActive="router-link-active"
+                    [routerLinkActiveOptions]="{ exact: true }" class="nav-link">All Tasks</a>
+            </ng-container>
+        </div>
     </div>
 
-    <div class="navigation">
-        @if(this.isAdmin()){ <a [routerLink]="['/admin','all-task']" routerLinkActive="router-link-active"
-            class="nav-link">All
-            Tasks</a>
-        <a [routerLink]="['/admin','new-task']" routerLinkActive="router-link-active"
-            [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Add Task</a>}
-        @if(!this.isAdmin()){<a [routerLink]="['/user','all-task']" routerLinkActive="router-link-active"
-            [routerLinkActiveOptions]="{ exact: true }" class="nav-link">All Tasks</a>}
+    <div class="logout">
+        <button (click)="logout()">Logout</button>
     </div>
 </header>

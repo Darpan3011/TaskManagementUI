@@ -9,17 +9,21 @@
     outline: none;
     box-sizing: border-box;
     display: block;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
+/* Container styling */
 .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /* padding: 20px; */
 }
 
+/* Task list styles */
 ul.task-list {
     list-style-type: none;
     padding: 0;
@@ -29,7 +33,7 @@ ul.task-list {
     font-family: 'Poppins', sans-serif;
 }
 
-/* Styling for individual task item */
+/* Individual task item styling */
 ul.task-list .task-item {
     display: flex;
     flex-direction: column;
@@ -47,7 +51,7 @@ ul.task-list .task-item:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Task header with title and status */
+/* Task header with title and actions */
 .task-header {
     display: flex;
     justify-content: space-between;
@@ -61,6 +65,7 @@ ul.task-list .task-item:hover {
     color: #007bff;
 }
 
+/* Task status styling */
 .task-status-done {
     font-size: 14px;
     color: #28a745;
@@ -91,14 +96,50 @@ ul.task-list .task-item:hover {
 .task-user-id {
     font-size: 14px;
     color: #6c757d;
-    /* Grey for userId */
 }
 
-/* Styling for empty state when no tasks are found */
+/* Button styles */
+.edit-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
+
+.delete-button {
+    background-color: #ff4343;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: #ff221a;
+}
+
+.task-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Empty state message */
 p {
-    /* text-align: center; */
     font-size: 16px;
     color: #888;
+    /* text-align: center; */
 }
 
 /* Responsive adjustments */
@@ -129,57 +170,106 @@ p {
     }
 }
 
-/* Style for the edit button */
-.edit-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    font-size: 14px;
+/* Select dropdown styling */
+select {
+    padding: 6px 10px;
+    font-size: 12px;
+    border: 1px solid #ddd;
     border-radius: 5px;
+    background-color: #fff;
+    color: #555;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    outline: none;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    width: 150px;
 }
 
-/* Hover effect for the button */
-.edit-button:hover {
-    background-color: #0056b3;
+/* Styling for the selected option */
+select:focus {
+    border-color: #007bff;
+    background-color: #f2f9ff;
 }
 
-.delete-button {
-    background-color: #ff4343;
+/* Remove arrow style in select (for customization) */
+select::-ms-expand {
+    display: none;
+}
+
+/* Style for the placeholder option */
+select option[disabled] {
+    color: #888;
+    font-style: italic;
+}
+
+/* Apply specific styling for the select dropdown within task item */
+ul.task-list .task-item .task-buttons select {
+    width: auto;
+    /* Make sure it doesn't stretch too wide */
+    max-width: 100%;
+    font-family: 'Poppins', sans-serif;
+}
+
+.change-status-label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+    /* margin-bottom: 5px; */
+    /* display: block; */
+    /* Ensures it is displayed on its own line */
+}
+
+
+/* Message styling */
+.success-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #28a745;
     color: white;
-    border: none;
-    padding: 5px 10px;
-    font-size: 14px;
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-/* Hover effect for the button */
-.delete-button:hover {
-    background-color: #ff221a;
-}
-
-.task-buttons {
+    font-size: 16px;
+    z-index: 999;
     display: flex;
-    gap: 10px;
+    justify-content: center;
     align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: showMessage 3s forwards;
+}
+
+@keyframes showMessage {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 .error-message {
-    color: red;
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-.search-input {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    width: 100%;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #df425c;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    animation: showMessage 3s forwards;
 }
 
 form {
