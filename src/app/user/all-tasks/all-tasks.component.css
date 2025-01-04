@@ -156,12 +156,12 @@ form {
     align-items: center;
     justify-content: space-between;
     gap: 15px;
-    background-color: #ffffff;
-    padding: 10px;
+    /* background-color: #ffffff; */
+    /* padding: 10px; */
     border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    /* margin-bottom: 20px; */
 }
 
 form input[type="text"],
@@ -212,5 +212,10 @@ form button[type="submit"]:active {
     form {
         display: flex;
         flex-direction: column;
+        align-items: start;
+    }
+
+    form select, form input{
+        width: 100%;
     }
 }

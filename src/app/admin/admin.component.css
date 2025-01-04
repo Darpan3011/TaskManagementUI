@@ -30,8 +30,8 @@
 
 
 @media screen and (max-width: 768px) {
-    .headerContainer {
-        width: 100px; 
+    .headerContainer{
+        display: none;
     }
 
     .container {

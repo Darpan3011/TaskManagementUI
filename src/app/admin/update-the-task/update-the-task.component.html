@@ -4,7 +4,7 @@
     <input class="task-title" name="task-title" [(ngModel)]="task!.title" readonly />
 
     <label for="task-status">Task Status</label>
-    <input [value]="task!.status" name="task-status" type="number" [(ngModel)]="task!.status" />
+    <input [value]="task!.status" name="task-status" type="number" class="task-description" [(ngModel)]="task!.status" min="0" max="2"/>
 
     <label for="task-description">Task Description</label>
     <input class="task-description" id="task-description" [(ngModel)]="task!.description" name="taskDescription" />
