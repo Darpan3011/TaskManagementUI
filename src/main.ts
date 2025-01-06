@@ -1,11 +1,11 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { importProvidersFrom, inject } from '@angular/core';
-import { HttpClient, HttpClientModule, HttpErrorResponse, HttpEventType, HttpHandlerFn, HttpRequest, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpClientModule, HttpErrorResponse, HttpHandlerFn, HttpRequest, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthServiceService } from './services/auth-service.service';
 import { provideRouter, withComponentInputBinding, withRouterConfig } from '@angular/router';
 import { routes } from './app/app.routes';
-import { catchError, switchMap, tap, throwError } from 'rxjs';
+import { catchError, switchMap, throwError } from 'rxjs';
 
 function globalHttpInterceptor(request: HttpRequest<unknown>, next: HttpHandlerFn) {
   const authService = inject(AuthServiceService);

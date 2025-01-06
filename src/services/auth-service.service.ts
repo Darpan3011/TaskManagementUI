@@ -16,13 +16,13 @@ export class AuthServiceService {
 
   _isAuthenticated = signal(false);
   _userType = signal<'Admin' | 'User' | 'Unknown'>('Unknown');
-  _userName = signal(localStorage.getItem('userName') || ''); // Default to localStorage value
+  _userName = signal(localStorage.getItem('userName') || '');
   get userName() {
     return this._userName();
   }
   set userName(value: string) {
-    this._userName.set(value);  // Update the signal
-    localStorage.setItem('userName', value);  // Also update localStorage
+    this._userName.set(value);
+    localStorage.setItem('userName', value);
   }
 
   get userType() {

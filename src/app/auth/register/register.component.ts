@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { AuthServiceService } from '../../../services/auth-service.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { NgClass, NgIf } from '@angular/common';
 
@@ -38,6 +38,7 @@ function passwordValidator(): ValidatorFn {
 })
 export class RegisterComponent {
   private authService = inject(AuthServiceService);
+  private router = inject(Router);
   private destroy = inject(DestroyRef);
 
   form = new FormGroup({
@@ -49,14 +50,22 @@ export class RegisterComponent {
 
   onRegister() {
     const s2 = this.authService.RegisterFn(this.form.value.username!, this.form.value.password!).subscribe({
-      next: (data: any) => {
+      next: () => {
         this.successMessage = 'Registered Successfully';
         this.errorMessage = '';
+        setTimeout(() => {
+          this.router.navigate(['/auth', 'login']);
+        }, 3000)
       },
       error: (err) => {
         this.successMessage = '';
-        if (err.status === 400 && Array.isArray(err.error)) {
-          this.errorMessage = err.error.map((e: any) => e.description).join(' ');
+        if (err.status === 400 && err.error?.errors) {
+          const errors = err.error.errors;
+          this.errorMessage = Object.values(errors)
+            .flat()
+            .join(' ');
+        } else {
+          this.errorMessage = 'An unexpected error occurred.';
         }
       },
     });

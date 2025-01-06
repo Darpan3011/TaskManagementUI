@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class UpdateTheTaskComponent implements OnInit {
 
-  @Input({ required: true }) title!: string
+  @Input({ required: true }) title!: string | undefined
   errorMessage: string | null = null;
   successMessage: string | null = null;
 
