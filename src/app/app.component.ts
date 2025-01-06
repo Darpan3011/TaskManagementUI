@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service.service';
-import { RouterOutlet, Router, RouterModule } from '@angular/router';
+import { RouterOutlet, RouterModule } from '@angular/router';
 import { AuthGuard } from '../guards/auth-guard.service';
 
 @Component({
