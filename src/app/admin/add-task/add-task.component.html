@@ -11,8 +11,14 @@
 
     <div class="form-group">
         <label for="task-status">Task Status</label>
-        <input name="task-status" type="number" formControlName="status"
-            [ngClass]="{'is-invalid': form.get('status')?.invalid && form.get('status')?.touched}" min="0" max="2" />
+        <select formControlName="status"
+            [ngClass]="{'is-invalid': form.get('status')?.invalid && form.get('status')?.touched}">
+            <option [ngValue]="0">Pending</option>
+            <option [ngValue]="1">In Progress</option>
+            <option [ngValue]="2">Complete</option>
+        </select>
+        <!-- <input name="task-status" type="number" formControlName="status"  [ngClass]="{'is-invalid': form.get('status')?.invalid && form.get('status')?.touched}"
+             min="0" max="2" /> -->
         <span *ngIf="form.get('status')?.hasError('required') && form.get('status')?.touched" class="error-message">
             Task status is required.
         </span>
