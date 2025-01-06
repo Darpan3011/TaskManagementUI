@@ -98,10 +98,13 @@ button[type="button"]:hover {
 
 /* Error message styling */
 .error-message {
-    color: #d9534f;
-    font-size: 14px;
+    color: #e3342f;
     margin-top: 15px;
-    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #f8d7da;
+    border: 1px solid #f9c0c5;
 }
 
 /* Responsive adjustments */

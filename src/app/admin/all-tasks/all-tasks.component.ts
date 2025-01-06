@@ -40,21 +40,26 @@ export class FilterTaskComponent implements OnInit {
   }
 
   deleteTask(title: string) {
-    this.taskService.deleteTheTask(title).subscribe({
+    const s2 = this.taskService.deleteTheTask(title).subscribe({
       error: (err) => {
         console.error('Error deleting task:', err);
         this.errorMessage = `Failed to delete the task "${title}". Please try again.`;
       },
     });
+
+    this.destroy.onDestroy(() => {
+      s2.unsubscribe();
+    })
   }
 
 
   onSearchTask() {
+    console.log(this.form.value.status);
+
     const title = this.form.value.title ? this.form.value.title : null;
     const date = this.form.value.date ? this.form.value.date : null;
-    const status = this.form.value.status ? this.form.value.status : null;
 
-    this.taskService.filterTasks(title, date, status).subscribe({
+    const s2 = this.taskService.filterTasks(title, date, this.form.value.status!).subscribe({
       next: (data: any) => {
         this.tasks = data;
       },
@@ -62,10 +67,10 @@ export class FilterTaskComponent implements OnInit {
         this.tasks = null;
       }
     });
-    
+
+    this.destroy.onDestroy(() => {
+      s2.unsubscribe();
+    })
+
   }
-
-
-
-
 }

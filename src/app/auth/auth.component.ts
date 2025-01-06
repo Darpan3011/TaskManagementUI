@@ -8,5 +8,4 @@ import { Router, RouterOutlet } from "@angular/router";
 })
 
 
-export class AuthComponent {
-}
+export class AuthComponent { }

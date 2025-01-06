@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { AuthServiceService } from '../../../services/auth-service.service';
 import { Router, RouterModule } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
@@ -18,6 +18,7 @@ interface CustomJwtPayload {
 export class LoginComponent {
 
   private authService = inject(AuthServiceService);
+  private destroy = inject(DestroyRef);
   private router = inject(Router);
   switchLogin = signal(true);
   errorMessage = '';
@@ -33,7 +34,7 @@ export class LoginComponent {
     this.errorMessage = '';
     const name = this.form.value.username;
     const password = this.form.value.password;
-    this.authService.loginFn(name!, password!).subscribe({
+    const s2 = this.authService.loginFn(name!, password!).subscribe({
       next: (data: any) => {
         try {
           localStorage.setItem('Token', data.token);
@@ -61,5 +62,9 @@ export class LoginComponent {
         this.errorMessage = 'Login failed.';
       },
     });
+
+    this.destroy.onDestroy(() => {
+      s2.unsubscribe();
+    })
   }
 }

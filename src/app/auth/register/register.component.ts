@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { AuthServiceService } from '../../../services/auth-service.service';
 import { RouterModule } from '@angular/router';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
@@ -38,23 +38,31 @@ function passwordValidator(): ValidatorFn {
 })
 export class RegisterComponent {
   private authService = inject(AuthServiceService);
+  private destroy = inject(DestroyRef);
 
   form = new FormGroup({
     username: new FormControl<string | null>(null, [Validators.required]),
     password: new FormControl<string | null>(null, [Validators.required, Validators.minLength(6), passwordValidator()]),
   });
   errorMessage = '';
+  successMessage = '';
 
   onRegister() {
-    this.authService.RegisterFn(this.form.value.username!, this.form.value.password!).subscribe({
+    const s2 = this.authService.RegisterFn(this.form.value.username!, this.form.value.password!).subscribe({
       next: (data: any) => {
-        console.log('Register success:', data);
+        this.successMessage = 'Registered Successfully';
+        this.errorMessage = '';
       },
       error: (err) => {
-        if (err.status === 400) {
-          this.errorMessage = 'Username already exists. Please try a different username.';
+        this.successMessage = '';
+        if (err.status === 400 && Array.isArray(err.error)) {
+          this.errorMessage = err.error.map((e: any) => e.description).join(' ');
         }
       },
+    });
+
+    this.destroy.onDestroy(() => {
+      s2.unsubscribe();
     });
   }
 }

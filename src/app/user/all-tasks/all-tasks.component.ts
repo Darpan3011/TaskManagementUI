@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { TaskServiceService } from '../../../services/task-service.service';
 import { Task } from '../../types';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class AllTasksComponent implements OnInit {
 
   private taskService = inject(TaskServiceService);
+  private destroy = inject(DestroyRef);
   private router = inject(Router);
   isSuccess = false;
   isError = false;
@@ -29,19 +30,24 @@ export class AllTasksComponent implements OnInit {
   alltasks: Task[] | null = null;
 
 
+
   ngOnInit() {
-    this.taskService.filterTasks(null, null, null).subscribe({
+    const s2 = this.taskService.filterTasks(null, null, null).subscribe({
       next: (data) => {
         this.alltasks = data as Task[];
       },
       error: (err) => console.error('Error loading tasks:', err),
     });
 
+    this.destroy.onDestroy(() => {
+      s2.unsubscribe();
+    })
+
   }
 
   onStatusChange(taskTitle: string, status: number) {
     const newStatus = Number(this.taskStatus());
-    this.taskService.updateTaskStatusUser(taskTitle, newStatus).subscribe({
+    const s2 = this.taskService.updateTaskStatusUser(taskTitle, newStatus).subscribe({
       next: () => {
         const currentUrl = this.router.url;
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
@@ -59,6 +65,10 @@ export class AllTasksComponent implements OnInit {
         }, 3000);
       }
     });
+
+    this.destroy.onDestroy(() => {
+      s2.unsubscribe();
+    })
   }
 
   onSearchTask() {
@@ -67,7 +77,7 @@ export class AllTasksComponent implements OnInit {
     const date = this.form.value.date ? this.form.value.date : null;
     const status = this.form.value.status ? this.form.value.status : null;
 
-    this.taskService.filterTasks(title, date, status).subscribe({
+    const s2 = this.taskService.filterTasks(title, date, status).subscribe({
       next: (data: any) => {
         this.alltasks = data;
       },
@@ -75,5 +85,9 @@ export class AllTasksComponent implements OnInit {
         this.alltasks = null;
       }
     });
+
+    this.destroy.onDestroy(() => {
+      s2.unsubscribe();
+    })
   }
 }
