@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
@@ -47,21 +47,37 @@ export class AuthServiceService {
   }
 
   loginFn(username: string, password: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    });
     return this.httpclient.post('https://localhost:7125/api/Authentication/Login', {
       username,
       password
-    });
+    }, { headers });
   }
 
   RegisterFn(username: string, password: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    });
     return this.httpclient.post('https://localhost:7125/api/Authentication/Register/1', {
       username,
       password
-    });
+    }, { headers });
   }
 
   refreshToken(refreshToken: string) {
-    return this.httpclient.post('https://localhost:7125/api/Authentication/RefreshToken', { refreshToken });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    });
+
+    return this.httpclient.post('https://localhost:7125/api/Authentication/RefreshToken', { refreshToken }, { headers });
   }
 
   logoutFn() {
