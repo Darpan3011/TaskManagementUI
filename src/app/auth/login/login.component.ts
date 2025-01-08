@@ -22,6 +22,7 @@ export class LoginComponent {
   private router = inject(Router);
   switchLogin = signal(true);
   errorMessage = '';
+  isLoading = false;
 
   form = new FormGroup({
     username: new FormControl<string | null>(null, [Validators.required]),
@@ -29,13 +30,14 @@ export class LoginComponent {
   });
 
   onSubmit() {
-    console.log(this.form);
-
+    this.isLoading = true;
     this.errorMessage = '';
     const name = this.form.value.username;
     const password = this.form.value.password;
     const s2 = this.authService.loginFn(name!, password!).subscribe({
       next: (data: any) => {
+        this.isLoading = false;
+        
         try {
           localStorage.setItem('Token', data.token);
           localStorage.setItem('refreshToken', data.refreshToken);
@@ -55,10 +57,12 @@ export class LoginComponent {
             this.router.navigate(['../', 'auth', 'login']);
           }
         } catch (error) {
+          this.isLoading = false;
           this.errorMessage = 'Invalid token received. Please try again.';
         }
       },
       error: (err) => {
+        this.isLoading = false;
         this.errorMessage = 'Login failed.';
       },
     });

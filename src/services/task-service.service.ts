@@ -9,13 +9,15 @@ export class TaskServiceService {
 
     private httpClient = inject(HttpClient);
 
+    private readonly BASE_URL = "https://localhost:7125";
+
     getAllTasks() {
         const token = localStorage.getItem('Token');
         const headers = new HttpHeaders({
             Authorization: `Bearer ${token}`
         });
 
-        return this.httpClient.get('https://localhost:7125/api/Tasks', {
+        return this.httpClient.get(`${this.BASE_URL}/api/Tasks`, {
             headers
         });
     }
@@ -26,7 +28,7 @@ export class TaskServiceService {
             Authorization: `Bearer ${token}`
         });
 
-        return this.httpClient.put('https://localhost:7125/api/Tasks/edit', task, {
+        return this.httpClient.put(`${this.BASE_URL}/api/Tasks/edit`, task, {
             headers
         });
     }
@@ -37,7 +39,7 @@ export class TaskServiceService {
             Authorization: `Bearer ${token}`
         });
 
-        return this.httpClient.post('https://localhost:7125/api/Tasks/add', task, {
+        return this.httpClient.post(`${this.BASE_URL}/api/Tasks/add`, task, {
             headers
         });
     }
@@ -48,7 +50,7 @@ export class TaskServiceService {
             Authorization: `Bearer ${token}`
         });
 
-        return this.httpClient.get('https://localhost:7125/api/Tasks/users', {
+        return this.httpClient.get(`${this.BASE_URL}/api/Tasks/users`, {
             headers
         });
     }
@@ -59,7 +61,7 @@ export class TaskServiceService {
             Authorization: `Bearer ${token}`
         });
 
-        return this.httpClient.delete(`https://localhost:7125/api/Tasks/delete/${title}`, {
+        return this.httpClient.delete(`${this.BASE_URL}/api/Tasks/delete/${title}`, {
             headers
         });
     }
@@ -70,7 +72,7 @@ export class TaskServiceService {
     //         Authorization: `Bearer ${token}`
     //     });
 
-    //     return this.httpClient.get(`https://localhost:7125/api/Admin/GetAllTaskByDueDate/${date}`, {
+    //     return this.httpClient.get(`${BASE_URL}/api/Admin/GetAllTaskByDueDate/${date}`, {
     //         headers
     //     });
     // }
@@ -80,7 +82,7 @@ export class TaskServiceService {
     //     const headers = new HttpHeaders({
     //         Authorization: `Bearer ${token}`
     //     });
-    //     return this.httpClient.get(`https://localhost:7125/api/Admin/GetAllTaskByStatus/${status}`, {
+    //     return this.httpClient.get(`${BASE_URL}/api/Admin/GetAllTaskByStatus/${status}`, {
     //         headers
     //     });
     // }
@@ -90,7 +92,7 @@ export class TaskServiceService {
         const headers = new HttpHeaders({
             Authorization: `Bearer ${token}`
         });
-        return this.httpClient.get(`https://localhost:7125/api/Tasks/tasks/id/?UserID=${UserID}`, {
+        return this.httpClient.get(`${this.BASE_URL}/api/Tasks/tasks/id/?UserID=${UserID}`, {
             headers
         });
     }
@@ -100,7 +102,7 @@ export class TaskServiceService {
         const headers = new HttpHeaders({
             Authorization: `Bearer ${token}`
         });
-        return this.httpClient.put(`https://localhost:7125/api/Tasks/tasks/${taskTitle}/status/?newStatus=${status}`, {
+        return this.httpClient.put(`${this.BASE_URL}/api/Tasks/tasks/${taskTitle}/status/?newStatus=${status}`, {
             headers
         });
     }
@@ -118,7 +120,7 @@ export class TaskServiceService {
         if (status !== null && status !== undefined) params.append('status', status.toString());
 
         const queryString = params.toString();
-        return this.httpClient.get(`https://localhost:7125/api/Tasks/filter?${queryString}`, { headers });
+        return this.httpClient.get(`${this.BASE_URL}/api/Tasks/filter?${queryString}`, { headers });
     }
 
 

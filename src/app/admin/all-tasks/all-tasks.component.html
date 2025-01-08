@@ -1,47 +1,47 @@
+<form (ngSubmit)="onSearchTask()" [formGroup]="form">
+    <input type="text" name="title" placeholder="Title" formControlName="title">
 
-    <form (ngSubmit)="onSearchTask()" [formGroup]="form">
-        <input type="text" name="title" placeholder="Title" formControlName="title">
+    <input type="date" name="date" placeholder="yyyy-mm-dd" formControlName="date">
 
-        <input type="date" name="date" placeholder="yyyy-mm-dd" formControlName="date">
+    <select name="status" formControlName="status">
+        <option [ngValue]="null">Selet an option</option>
+        <option [ngValue]="0">Pending</option>
+        <option [ngValue]="1">In Progress</option>
+        <option [ngValue]="2">Completed</option>
+    </select>
+    <button type="submit">Search Task</button>
+</form>
 
-        <select name="status" formControlName="status">
-            <option [ngValue]="null">Selet an option</option>
-            <option [ngValue]="0">Pending</option>
-            <option [ngValue]="1">In Progress</option>
-            <option [ngValue]="2">Completed</option>
-        </select>
-        <button type="submit">Search Task</button>
-    </form>
+<div *ngIf="loading&&!errorMessage">Loading......</div>
+<div *ngIf="errorMessage&&!loading" class="error-message">{{ errorMessage }}</div>
 
-    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-
-    @if(tasks && tasks.length > 0) {
-    <ul class="task-list">
-        @for(task of tasks; track task.title) {
-        <li class="task-item">
-            <div class="task-header">
-                <span class="task-title">{{ task.title }}</span>
-                <div class="task-buttons">
-                    <a class="edit-button" [routerLink]="['..', 'update-task', task.title]"
-                        routerLinkActive="router-link-active">Edit</a>
-                    <button class="delete-button" (click)="deleteTask(task.title)">
-                        Delete
-                    </button>
-                </div>
+@if(!loading&&tasks && tasks.length > 0) {
+<ul class="task-list">
+    @for(task of tasks; track task.title) {
+    <li class="task-item">
+        <div class="task-header">
+            <span class="task-title">{{ task.title }}</span>
+            <div class="task-buttons">
+                <a class="edit-button" [routerLink]="['..', 'update-task', task.title]"
+                    routerLinkActive="router-link-active">Edit</a>
+                <button class="delete-button" (click)="deleteTask(task.title)">
+                    Delete
+                </button>
             </div>
-            <span [ngClass]="{
+        </div>
+        <span [ngClass]="{
           'task-status-done': task.status == 2,
           'task-status-inProgress': task.status == 1,
           'task-status-pending': task.status == 0
         }">Status: {{ task.status| statusPipe }}</span>
-            <p class="task-description">{{ task.description }}</p>
-            <p class="task-description">DueDate: {{ task.dueDate | date:'shortDate'}}</p>
-            <span class="task-user-id">Assigned to: {{ task.userName }}</span>
-        </li>
-        }
-    </ul>
-    } @else {
-    <p>No tasks found.</p>
+        <p class="task-description">{{ task.description }}</p>
+        <p class="task-description">DueDate: {{ task.dueDate | date:'fullDate'}}</p>
+        <span class="task-user-id">Assigned to: {{ task.userName }}</span>
+    </li>
     }
+</ul>
+} @else if(!loading&&!tasks || !loading&&tasks?.length===0) {
+<p>No tasks found.</p>
+}
 
 <router-outlet />

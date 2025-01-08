@@ -2,13 +2,13 @@ import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angula
 import { TaskServiceService } from '../../../services/task-service.service';
 import { Task } from '../../types';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DatePipe, NgClass } from '@angular/common';
+import { DatePipe, NgClass, NgIf } from '@angular/common';
 import { StatusPipe } from '../../../pipes/status.pipe';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-tasks',
-  imports: [FormsModule, NgClass, StatusPipe, ReactiveFormsModule, DatePipe],
+  imports: [FormsModule, NgClass, StatusPipe, ReactiveFormsModule, DatePipe, NgIf],
   templateUrl: './all-tasks.component.html',
   styleUrl: './all-tasks.component.css'
 })
@@ -19,6 +19,7 @@ export class AllTasksComponent implements OnInit {
   private router = inject(Router);
   isSuccess = false;
   isError = false;
+  isLoading = false;
   taskStatus = signal<number | null>(null);
 
   form = new FormGroup({
@@ -72,16 +73,17 @@ export class AllTasksComponent implements OnInit {
   }
 
   onSearchTask() {
-
+    this.isLoading = true;
     const title = this.form.value.title ? this.form.value.title : null;
     const date = this.form.value.date ? this.form.value.date : null;
-    const status = this.form.value.status ? this.form.value.status : null;
 
-    const s2 = this.taskService.filterTasks(title, date, status).subscribe({
+    const s2 = this.taskService.filterTasks(title, date, this.form.value.status!).subscribe({
       next: (data: any) => {
+        this.isLoading = false;
         this.alltasks = data;
       },
       error: (err) => {
+        this.isLoading = false;
         this.alltasks = null;
       }
     });

@@ -13,7 +13,7 @@
             Password is required
         </span>
 
-        <button type="submit">Login</button>
+        <button type="submit">{{isLoading? 'Loading...':'Login'}}</button>
         <button type="button" [routerLink]="[ '../', 'register']" routerLinkActive="router-link-active">Want to
             Register</button>
     </form>

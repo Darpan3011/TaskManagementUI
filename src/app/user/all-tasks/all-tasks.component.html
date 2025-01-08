@@ -1,52 +1,52 @@
+<form (ngSubmit)="onSearchTask()" [formGroup]="form">
+    <input type="text" name="title" placeholder="Title" formControlName="title">
 
-    <form (ngSubmit)="onSearchTask()" [formGroup]="form">
-        <input type="text" name="title" placeholder="Title" formControlName="title">
+    <input type="date" name="date" placeholder="yyyy-mm-dd" formControlName="date">
 
-        <input type="date" name="date" placeholder="yyyy-mm-dd" formControlName="date">
+    <select name="status" formControlName="status">
+        <option [ngValue]="null">Selet an option</option>
+        <option [ngValue]="0">Pending</option>
+        <option [ngValue]="1">In Progress</option>
+        <option [ngValue]="2">Completed</option>
+    </select>
+    <button type="submit">Search Task</button>
+</form>
+<div *ngIf="isLoading">Loading...</div>
 
-        <select name="status" formControlName="status">
-            <option [ngValue]="null">Selet an option</option>
-            <option [ngValue]="0">Pending</option>
-            <option [ngValue]="1">In Progress</option>
-            <option [ngValue]="2">Completed</option>
-        </select>
-        <button type="submit">Search Task</button>
-    </form>
+@if(!isLoading&&alltasks && alltasks.length > 0){
+<ul class="task-list">
 
-    @if(alltasks && alltasks.length > 0){
-    <ul class="task-list">
-
-        @for(task of alltasks; track task.description){
-        <li class="task-item">
-            <div class="task-header">
-                <span class="task-title">{{task.title}}</span>
-                <div class="task-buttons">
-                    <label class="change-status-label">Change Status:</label>
-                    <select [(ngModel)]="taskStatus" (change)="onStatusChange(task.title, task.status)">
-                        <option [value]="null" disabled selected>Select an option</option>
-                        <option [value]="0">Pending</option>
-                        <option [value]="1">In Progress</option>
-                        <option [value]="2">Completed</option>
-                    </select>
-                </div>
+    @for(task of alltasks; track task.description){
+    <li class="task-item">
+        <div class="task-header">
+            <span class="task-title">{{task.title}}</span>
+            <div class="task-buttons">
+                <label class="change-status-label">Change Status:</label>
+                <select [(ngModel)]="taskStatus" (change)="onStatusChange(task.title, task.status)">
+                    <option [value]="null" disabled selected>Select an option</option>
+                    <option [value]="0">Pending</option>
+                    <option [value]="1">In Progress</option>
+                    <option [value]="2">Completed</option>
+                </select>
             </div>
-            <span [ngClass]="{
+        </div>
+        <span [ngClass]="{
                                 'task-status-pending': task.status == 0,
                                 'task-status-inProgress': task.status == 1,
                                 'task-status-done': task.status == 2
                                 }">Status: {{task.status | statusPipe}}</span>
-            <p class="task-description">{{task.description}}</p>
-            <p class="task-description">{{task.dueDate | date:'short'}}</p>
-        </li>
-        }
-    </ul>
-    } @else {
-    <p>No Tasks found.</p>
+        <p class="task-description">{{task.description}}</p>
+        <p class="task-description">{{task.dueDate | date:'fullDate'}}</p>
+    </li>
     }
+</ul>
+} @else if(!isLoading&&!alltasks) {
+<p>No Tasks found.</p>
+}
 
-    @if(isSuccess){<div class="success-message">
-        Updated the task successfully.
-    </div>}
-    @if(isError){<div class="error-message">
-        Failed to update the task.
-    </div>}
+@if(isSuccess){<div class="success-message">
+    Updated the task successfully.
+</div>}
+@if(isError){<div class="error-message">
+    Failed to update the task.
+</div>}

@@ -16,6 +16,7 @@ export class FilterTaskComponent implements OnInit {
 
   private taskService = inject(TaskServiceService);
   private destroy = inject(DestroyRef);
+  loading: boolean = false;
 
   form = new FormGroup({
     title: new FormControl<string | null>(null),
@@ -28,10 +29,17 @@ export class FilterTaskComponent implements OnInit {
 
   ngOnInit() {
 
+    this.loading = true;
     const s2 = this.taskService.filterTasks(null, null, null).subscribe({
       next: (data: any) => {
+        this.loading = false;
         this.tasks = data;
+        this.errorMessage = '';
       },
+      error: () => {
+        this.loading = false;
+        this.errorMessage = "Failed to fetch the tasks";
+      }
     });
 
     this.destroy.onDestroy(() => {
@@ -54,18 +62,19 @@ export class FilterTaskComponent implements OnInit {
 
 
   onSearchTask() {
-    console.log(this.form.value.status);
-
+    this.loading = true;
     const title = this.form.value.title ? this.form.value.title : null;
     const date = this.form.value.date ? this.form.value.date : null;
 
     const s2 = this.taskService.filterTasks(title, date, this.form.value.status!).subscribe({
       next: (data: any) => {
+        this.loading = false;
         this.tasks = data;
       },
       error: (err) => {
+        this.loading = false;
         this.tasks = null;
-      }
+      },
     });
 
     this.destroy.onDestroy(() => {

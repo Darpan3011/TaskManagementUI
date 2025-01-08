@@ -23,7 +23,7 @@
         </div>
 
         <button type="submit" [ngClass]="{'invalidform': form.invalid }" [disabled]="form.invalid">
-            Register
+            {{isLoading?'Loading...':'Register'}}
         </button>
 
         <button type="button" [routerLink]="[ '../', 'login']">Want to Login</button>

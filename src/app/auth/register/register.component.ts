@@ -47,10 +47,13 @@ export class RegisterComponent {
   });
   errorMessage = '';
   successMessage = '';
+  isLoading = false;
 
   onRegister() {
+    this.isLoading = true;
     const s2 = this.authService.RegisterFn(this.form.value.username!, this.form.value.password!).subscribe({
       next: () => {
+        this.isLoading = false;
         this.successMessage = 'Registered Successfully';
         this.errorMessage = '';
         setTimeout(() => {
@@ -58,6 +61,7 @@ export class RegisterComponent {
         }, 3000)
       },
       error: (err) => {
+        this.isLoading = false;
         this.successMessage = '';
         if (err.status === 400 && err.error?.errors) {
           const errors = err.error.errors;
