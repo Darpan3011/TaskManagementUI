@@ -30,16 +30,18 @@ export class AllTasksComponent implements OnInit {
 
   alltasks: Task[] | null = null;
 
-
-
-  ngOnInit() {
-    const s2 = this.taskService.filterTasks(null, null, null).subscribe({
+  get GetTasks() {
+    return this.taskService.filterTasks(null, null, null).subscribe({
       next: (data) => {
         this.alltasks = data as Task[];
       },
       error: (err) => console.error('Error loading tasks:', err),
     });
+  }
 
+
+  ngOnInit() {
+    const s2 = this.GetTasks;
     this.destroy.onDestroy(() => {
       s2.unsubscribe();
     })
@@ -50,10 +52,11 @@ export class AllTasksComponent implements OnInit {
     const newStatus = Number(this.taskStatus());
     const s2 = this.taskService.updateTaskStatusUser(taskTitle, newStatus).subscribe({
       next: () => {
-        const currentUrl = this.router.url;
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate([currentUrl]);
-        });
+        const s2 = this.GetTasks;
+
+        this.destroy.onDestroy(() => {
+          s2.unsubscribe();
+        })
         this.isSuccess = true;
         setTimeout(() => {
           this.isSuccess = false;

@@ -6,10 +6,11 @@ import { FilterTaskComponent } from "./admin/all-tasks/all-tasks.component";
 import { UpdateTheTaskComponent } from "./admin/update-the-task/update-the-task.component";
 import { AllTasksComponent } from "./user/all-tasks/all-tasks.component";
 import { NotFoundPageComponent } from "./not-found-page/not-found-page.component";
-import { AuthGuard } from "../guards/auth-guard.service";
 import { LoginComponent } from "./auth/login/login.component";
 import { RegisterComponent } from "./auth/register/register.component";
 import { AuthComponent } from "./auth/auth.component";
+import { AuthGuard } from "../guards/admin-guard.service";
+import { UserGuard } from "../guards/user-guard.service";
 
 export const routes: Routes = [
     {
@@ -20,7 +21,7 @@ export const routes: Routes = [
     {
         path: 'admin',
         component: AdminComponent,
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         children: [
             { path: '', redirectTo: 'all-task', pathMatch: 'full' },
             { path: 'new-task', component: AddTaskComponent, title: 'Add Task' },
@@ -31,7 +32,7 @@ export const routes: Routes = [
     {
         path: 'user',
         component: UserComponent,
-        // canActivate: [AuthGuard],
+        canActivate: [UserGuard],
         children: [
             { path: '', redirectTo: 'all-task', pathMatch: 'full' },
             { path: 'all-task', component: AllTasksComponent, title: 'All Tasks' }
@@ -47,7 +48,7 @@ export const routes: Routes = [
         ]
     },
     {
-        path: '**', // Catch-all route for 404 errors
+        path: '**',
         component: NotFoundPageComponent
     }
 ];

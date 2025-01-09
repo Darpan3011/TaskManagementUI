@@ -215,7 +215,43 @@ form button[type="submit"]:active {
         align-items: start;
     }
 
-    form select, form input{
+    form select,
+    form input {
         width: 100%;
     }
+}
+
+.success-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    transition: opacity 0.5s ease-in-out;
+    color: #d1e7dd;
+    background-color: #0f5132;
+    border: 1px solid #badbcc;
+}
+
+
+/* Error message styling */
+.error-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    transition: opacity 0.5s ease-in-out;
+    color: #e3342f;
+    background-color: #f8d7da;
+    border: 1px solid #f9c0c5;
 }
