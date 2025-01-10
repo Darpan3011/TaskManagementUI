@@ -43,9 +43,9 @@ export class LoginComponent {
           localStorage.setItem('refreshToken', data.refreshToken);
 
           const token = jwtDecode<CustomJwtPayload>(data.token);
-          const role = token['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+          const role: "Admin" | "User" | "Unknown" = token['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] as "Admin" | "User" | "Unknown";
 
-          this.authService._userType.set(role as 'Admin' | 'User' | 'Unknown');
+          this.authService._userType.set(role);
           this.authService._userName.set(name!);
           localStorage.setItem('userName', name!);
 
