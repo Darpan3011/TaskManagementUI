@@ -21,7 +21,7 @@ export const routes: Routes = [
     {
         path: 'admin',
         component: AdminComponent,
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         children: [
             { path: '', redirectTo: 'all-task', pathMatch: 'full' },
             { path: 'new-task', component: AddTaskComponent, title: 'Add Task' },
@@ -32,7 +32,7 @@ export const routes: Routes = [
     {
         path: 'user',
         component: UserComponent,
-        canActivate: [UserGuard],
+        // canActivate: [UserGuard],
         children: [
             { path: '', redirectTo: 'all-task', pathMatch: 'full' },
             { path: 'all-task', component: AllTasksComponent, title: 'All Tasks' }

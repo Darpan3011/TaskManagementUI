@@ -37,7 +37,7 @@ export class LoginComponent {
     const s2 = this.authService.loginFn(name!, password!).subscribe({
       next: (data: any) => {
         this.isLoading = false;
-        
+
         try {
           localStorage.setItem('Token', data.token);
           localStorage.setItem('refreshToken', data.refreshToken);
@@ -50,11 +50,11 @@ export class LoginComponent {
           localStorage.setItem('userName', name!);
 
           if (role === 'Admin') {
-            this.router.navigate(['../', 'admin', 'all-task']);
+            this.router.navigate(['../', 'admin']);
           } else if (role === 'User') {
-            this.router.navigate(['../', 'user', 'all-task']);
+            this.router.navigate(['../', 'user']);
           } else if (role === 'Unknown') {
-            this.router.navigate(['../', 'auth', 'login']);
+            this.router.navigate(['../', 'auth']);
           }
         } catch (error) {
           this.isLoading = false;
