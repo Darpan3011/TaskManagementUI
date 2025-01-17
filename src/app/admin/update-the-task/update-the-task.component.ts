@@ -1,13 +1,13 @@
 import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { Task, User } from '../../types';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TaskServiceService } from '../../../services/task-service.service';
 import { NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-the-task',
-  imports: [FormsModule, NgFor, NgIf],
+  imports: [NgFor, NgIf, ReactiveFormsModule],
   templateUrl: './update-the-task.component.html',
   styleUrl: './update-the-task.component.css'
 })
@@ -23,7 +23,13 @@ export class UpdateTheTaskComponent implements OnInit {
 
   users: User[] | null = [];
 
-  task!: Task;
+  form = new FormGroup({
+    title: new FormControl<string | null>(null, [Validators.required]),
+    description: new FormControl<string | null>(null, [Validators.required, Validators.minLength(4)]),
+    status: new FormControl<number | null>(0, [Validators.required]),
+    userId: new FormControl<number | null>(null, [Validators.required]),
+    dueDate: new FormControl<Date | null>(null, [Validators.required]),
+  });
 
   ngOnInit() {
     const s2 = this.taskService.getAllUsers().subscribe({
@@ -39,7 +45,10 @@ export class UpdateTheTaskComponent implements OnInit {
       next: (data: any) => {
         const foundTask = data?.find((x: Task) => x.title === this.title);
         if (foundTask) {
-          this.task = foundTask;
+          const date = new Date(foundTask.dueDate);
+          date.setDate(date.getDate() + 1); // Add one day
+          foundTask.dueDate = date.toISOString().split('T')[0];
+          this.form.patchValue(foundTask);
         } else {
           this.errorMessage = 'Task not found.';
         }
@@ -57,7 +66,14 @@ export class UpdateTheTaskComponent implements OnInit {
 
 
   onSubmit() {
-    const subscribe = this.taskService.editTheTask(this.task!).subscribe({
+    const task: Task = {
+      title: this.form.value.title!,
+      description: this.form.value.description!,
+      status: this.form.value.status!,
+      userId: this.form.value.userId!,
+      dueDate: this.form.value.dueDate?.toString()!
+    }
+    const subscribe = this.taskService.editTheTask(task).subscribe({
       next: () => {
         this.successMessage = 'Task updated successfully!';
         this.errorMessage = null;
