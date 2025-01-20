@@ -2,8 +2,8 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { TaskServiceService } from '../../../services/task-service.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe, NgClass, NgIf } from '@angular/common';
-import { Task, TaskWithUserName, User } from '../../types';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { TaskWithUserName } from '../../types';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { StatusPipe } from '../../../pipes/status.pipe';
 
 @Component({
@@ -16,6 +16,9 @@ export class FilterTaskComponent implements OnInit {
 
   private taskService = inject(TaskServiceService);
   private destroy = inject(DestroyRef);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   loading: boolean = false;
 
   form = new FormGroup({
@@ -27,9 +30,24 @@ export class FilterTaskComponent implements OnInit {
   errorMessage: string | null = null;
   tasks: TaskWithUserName[] | null = [];
 
+  onSortChange(sortBy: string, sortOrder: string): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { sortBy, sortOrder },
+      queryParamsHandling: 'merge',
+    });
+  }
+
   ngOnInit() {
 
     this.loading = true;
+    this.route.queryParams.subscribe((params) => {
+      const { sortBy, sortOrder } = params;
+      if (sortBy && sortOrder && this.tasks) {
+        this.applySort(sortBy, sortOrder);
+      }
+    });
+
     const s2 = this.taskService.filterTasks(null, null, null).subscribe({
       next: (data: any) => {
         this.loading = false;
@@ -60,6 +78,29 @@ export class FilterTaskComponent implements OnInit {
     })
   }
 
+  private applySort(sortBy: string, sortOrder: string): void {
+    if (!this.tasks || this.tasks.length === 0) {
+      return;
+    }
+
+    const isAscending = sortOrder === 'asc';
+
+    this.tasks.sort((a, b) => {
+      let comparison = 0;
+
+      if (sortBy === 'status') {
+        comparison = a.status - b.status;
+      } else if (sortBy === 'dueDate') {
+        comparison = new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+      } else {
+        comparison = (a[sortBy as keyof TaskWithUserName] as string).localeCompare(
+          b[sortBy as keyof TaskWithUserName] as string
+        );
+      }
+
+      return isAscending ? comparison : -comparison;
+    });
+  }
 
   onSearchTask() {
     this.loading = true;
