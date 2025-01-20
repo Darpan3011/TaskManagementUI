@@ -162,7 +162,7 @@ form {
     border: 1px solid #ddd;
     border-radius: 8px;
     /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-    /* margin-bottom: 20px; */
+    margin-bottom: 20px;
 }
 
 form input[type="text"],
@@ -211,14 +211,19 @@ form button[type="submit"]:active {
 
 
 @media screen and (max-width: 768px) {
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-            
-        }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
 
-        form select, form input{
-            width: 100%;
-        }
+    }
+
+    form select,
+    form input {
+        width: 100%;
+    }
+}
+
+.sortByLabel {
+    font-size: 14px;
 }

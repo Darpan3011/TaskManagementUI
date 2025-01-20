@@ -12,6 +12,23 @@
     <button type="submit">Search Task</button>
 </form>
 
+<label for="sortBy" class="sortByLabel">Sort By</label>
+<div style="display: flex; gap: 10px; align-items: center;">
+    <select name="sortBy" style=" font-size: 14px;" #sortBySelect
+        (change)="onSortChange(sortBySelect.value, sortOrderSelect.value)">
+        <option value="title">Title</option>
+        <option value="status">Status</option>
+        <option value="userName">Username</option>
+        <option value="dueDate">Due Date</option>
+    </select>
+    <select name="sortOrder" style=" font-size: 14px;" #sortOrderSelect
+        (change)="onSortChange(sortBySelect.value, sortOrderSelect.value)">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+</div>
+
+
 <div *ngIf="loading&&!errorMessage">Loading......</div>
 <div *ngIf="errorMessage&&!loading" class="error-message">{{ errorMessage }}</div>
 
