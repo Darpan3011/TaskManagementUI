@@ -124,7 +124,7 @@ ul.task-list .task-item:hover {
     .task-user-id {
         font-size: 13px;
     }
-    
+
 }
 
 /* Select dropdown styling */
@@ -222,4 +222,8 @@ form button[type="submit"]:active {
     form input {
         width: 100%;
     }
+}
+
+.sortByLabel {
+    font-size: 14px;
 }
