@@ -67,6 +67,9 @@ export class FilterTaskComponent implements OnInit {
 
   deleteTask(title: string) {
     const s2 = this.taskService.deleteTheTask(title).subscribe({
+      next: () => {
+        this.onSearchTask();
+      },
       error: (err) => {
         console.error('Error deleting task:', err);
         this.errorMessage = `Failed to delete the task "${title}". Please try again.`;
