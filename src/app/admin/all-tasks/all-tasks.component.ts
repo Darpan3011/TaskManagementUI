@@ -20,6 +20,8 @@ export class FilterTaskComponent implements OnInit {
   private router = inject(Router);
 
   loading: boolean = false;
+  showPopup:boolean = false;
+  taskToDelete:string | null = null; 
 
   form = new FormGroup({
     title: new FormControl<string | null>(null),
@@ -36,6 +38,17 @@ export class FilterTaskComponent implements OnInit {
       queryParams: { sortBy, sortOrder },
       queryParamsHandling: 'merge',
     });
+  }
+
+  handleDelete(title:string){
+    this.taskToDelete = title;
+    this.showPopup = !this.showPopup;
+  }
+
+  closePopup(event: MouseEvent) {
+    if (event.target === event.currentTarget) {
+      this.showPopup = false;
+    }
   }
 
   ngOnInit() {
@@ -56,7 +69,7 @@ export class FilterTaskComponent implements OnInit {
       },
       error: () => {
         this.loading = false;
-        this.errorMessage = "Failed to fetch the tasks";
+        // this.errorMessage = "Failed to fetch the tasks";
       }
     });
 
@@ -68,6 +81,7 @@ export class FilterTaskComponent implements OnInit {
   deleteTask(title: string) {
     const s2 = this.taskService.deleteTheTask(title).subscribe({
       next: () => {
+        this.showPopup = false;
         this.onSearchTask();
       },
       error: (err) => {

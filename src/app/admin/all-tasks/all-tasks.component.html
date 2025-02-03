@@ -41,7 +41,7 @@
             <div class="task-buttons">
                 <a class="edit-button" [routerLink]="['..', 'update-task', task.title]"
                     routerLinkActive="router-link-active">Edit</a>
-                <button class="delete-button" (click)="deleteTask(task.title)">
+                <button class="delete-button" (click)="handleDelete(task.title)">
                     Delete
                 </button>
             </div>
@@ -60,5 +60,15 @@
 } @else if(!loading&&!tasks || !loading&&tasks?.length===0) {
 <p>No tasks found.</p>
 }
+
+<div class="popup-overlay" *ngIf="showPopup" (click)="closePopup($event)">
+    <div class="popup" (click)="$event.stopPropagation()">
+        <p>Delete <span class="highlight-task">{{ taskToDelete }}</span> task?</p>
+        <div class="popup-buttons">
+            <button class="btn-danger" (click)="deleteTask(taskToDelete!)">Yes</button>
+            <button class="btn-cancel" (click)="showPopup = false">Cancel</button>
+        </div>
+    </div>
+</div>
 
 <router-outlet />
