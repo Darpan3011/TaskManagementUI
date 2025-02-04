@@ -51,7 +51,7 @@
 
     <div class="form-group">
         <label for="task-date">Due Date</label>
-        <input class="task-date" name="task-date" type="date" formControlName="dueDate"
+        <input id="myDate" class="task-date" name="task-date" type="date" formControlName="dueDate" [min]="minDate"
             [ngClass]="{'is-invalid': form.get('dueDate')?.invalid && form.get('dueDate')?.touched}" />
         <span *ngIf="form.get('dueDate')?.hasError('required') && form.get('dueDate')?.touched" class="error-message">
             Due date is required.

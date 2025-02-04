@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-task.component.css'],
 })
 export class AddTaskComponent implements OnInit {
+  minDate: string = new Date().toISOString().split('T')[0];
 
   errorMessageForUser: string | null = null;
   successfullMessageForUser: string | null = null;
