@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrl: './update-the-task.component.css'
 })
 export class UpdateTheTaskComponent implements OnInit {
+  minDate: string = new Date().toISOString().split('T')[0];
 
   @Input({ required: true }) title!: string | undefined
   errorMessage: string | null = null;

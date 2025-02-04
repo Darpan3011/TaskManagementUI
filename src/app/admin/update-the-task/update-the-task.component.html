@@ -14,7 +14,7 @@
     <input class="task-description" id="task-description" formControlName="description" name="taskDescription" />
 
     <label for="task-date">Due Date</label>
-    <input class="task-date" name="task-date" type="date" formControlName="dueDate" />
+    <input class="task-date" name="task-date" type="date" formControlName="dueDate" [min]="minDate" />
 
     <label for="task-user-id">Assigned to</label>
     <select formControlName="userId" name="task-user-id">
